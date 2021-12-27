@@ -2,7 +2,10 @@ import argparse  # pragma: no cover
 
 from . import BaseClass, base_function  # pragma: no cover
 
-# @todo #1/DEV Ensure that 0pdd is enabled and could be used during daily activities.
+# @todo #1/DEV Ensure that 0pdd is enabled and could be used during
+#  daily activities.
+
+
 def main() -> None:  # pragma: no cover
     """
     The main function executes on commands:
@@ -55,6 +58,10 @@ def main() -> None:  # pragma: no cover
     print(base.base_method())
     print(base_function())
     print("End of main function")
+    # @todo #/DEV Invoke worksection REST API in order to test the E2E concept
+    #  https://realpython.com/api-integration-in-python/
+    #  https://worksection.com/faq/api-start.html
+    #
 
 
 if __name__ == "__main__":  # pragma: no cover

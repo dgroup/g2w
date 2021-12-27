@@ -1,3 +1,4 @@
+# @todo #/DEV Rename main project *.md to lower case (e.g. `README.md` -> `readme.md`)
 """Python setup.py for g2w package"""
 import io
 import os

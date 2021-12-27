@@ -1,5 +1,5 @@
 include LICENSE
 include HISTORY.md
-include Containerfile
+include Dockerfile
 graft tests
 graft g2w
