@@ -2,7 +2,7 @@ import argparse  # pragma: no cover
 
 from . import BaseClass, base_function  # pragma: no cover
 
-
+# @todo #1/DEV Ensure that 0pdd is enabled and could be used during daily activities.
 def main() -> None:  # pragma: no cover
     """
     The main function executes on commands:
