@@ -1,8 +1,11 @@
 # This is a basic workflow to help you get started with Actions
 
+# @todo #/DEV Add `black` as pre-commit Git hook for inspection & correction of files before commit
+#  https://www.mattlayman.com/blog/2018/python-code-black/
 name: CI
 
 # Controls when the workflow will run
+# @todo #/DEV Add CI badge into readme.md in order to see build status
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:

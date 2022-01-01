@@ -39,7 +39,20 @@ Run `make fmt` to format the code.
 
 ## Run the linter
 
-Run `make lint` to run the linter.
+1. Run `make lint` to run the linter.
+2. In case errors like  
+   ```bash
+   would reformat g2w/__main__.py
+   Oh no! 💥 💔 💥
+   1 file would be reformatted,
+   ```
+   you may use `black g2w/__main__.py` to fix it
+   ```bash
+   reformatted g2w/__main__.py
+   All done! ✨ 🍰 ✨
+   1 file reformatted.
+   ```
+   Read more here: https://www.mattlayman.com/blog/2018/python-code-black.
 
 ## Test your changes
 
