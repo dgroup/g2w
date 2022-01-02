@@ -12,7 +12,7 @@ class Ws:
         print("tbd")
         return {}
 
-    # @todo #/DEV Add comment to worksection
+    # @todo #/DEV Add comment to worksection system
     def add_comment(self, body) -> dict:
         print(body)
         return {}
