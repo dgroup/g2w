@@ -4,12 +4,15 @@
 #  required.
 import requests  # pragma: no cover
 import os  # pragma: no cover
+import argparse  # pragma: no cover
 
 # @todo #/DEV Fetch users data from worksection in order to get mapping between
 #  Gitlab and WS users. It should be a class, which is collection and each
 #  element is a user that represents json user from worksection.
 
-from g2w import Push
+from g2w import App, Push, Ws, Api
+
+
 # @todo #/DEV Add support of command line parser for program arguments
 
 
@@ -34,6 +37,13 @@ def main() -> None:  # pragma: no cover
 
 
 if __name__ == "__main__":  # pragma: no cover
-    # @todo #/DEV replace main method by App object that allows to build
-    #  E2E skeleton for unit testing
-    main()
+    cmd = argparse.ArgumentParser()
+    cmd.add_argument(
+        "-p",
+        "--port",
+        type=int,
+        help="The port to listen REST API endpoints",
+        default=8080,
+        required=False,
+    )
+    App().start(cmd.parse_args().port, Api(), Ws())

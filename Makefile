@@ -34,7 +34,7 @@ fmt:              ## Format code using black & isort.
 lint:             ## Run pep8, black, mypy linters.
 	$(ENV_PREFIX)flake8 g2w/
 	$(ENV_PREFIX)black -l 79 --check g2w/
-	$(ENV_PREFIX)black -l 79 --check tests/
+	$(ENV_PREFIX)black -l 200 --check tests/
 	$(ENV_PREFIX)mypy --ignore-missing-imports g2w/
 
 .PHONY: test

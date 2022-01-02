@@ -9,7 +9,7 @@
 [![CI](https://github.com/dgroup/g2w/actions/workflows/main.yml/badge.svg)](https://github.com/dgroup/g2w/actions/workflows/main.yml)
 [![0pdd](http://www.0pdd.com/svg?name=dgroup/g2w)](http://www.0pdd.com/p?name=dgroup/g2w)
 [![Dependency Status](https://requires.io/github/dgroup/g2w/requirements.svg?branch=main)](https://requires.io/github/dgroup/g2w/requirements/?branch=main)
-[![Known Vulnerabilities](https://snyk.io/test/github/dgroup/g2w/badge.svg)](https://snyk.io/org/dgroup/project/g2w/?tab=dependencies\&vulns=vulnerable)
+[![Known Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/dgroup/g2w)](https://app.snyk.io/org/dgroup/project/97a5d0de-3c9f-40ef-8ed6-42370d7a3330)
 [![DepShield Badge](https://depshield.sonatype.org/badges/dgroup/g2w/depshield.svg)](https://depshield.github.io)
 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=dgroup_g2w\&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=dgroup_g2w)

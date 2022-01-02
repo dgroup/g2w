@@ -34,6 +34,21 @@ jobs:
         run: make install
       - name: Run linter
         run: make lint
+      - name: External linters
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+# @todo #/DEV Enable sonarqube inspection for python project during each commit.
+#  In java it could be done over mvn plugin, however for python its unclear so far.
+#  Investigation is required.
+#           if [ -n "${{ secrets.SONAR_TOKEN }}" ]; then
+#             mvn -B -P qulice org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+#           fi
+           if [ -n "${{ secrets.CODECOV_TOKEN }}" ]; then
+             bash <(curl -s https://codecov.io/bash)
+           fi
 
   tests_linux:
     needs: linter

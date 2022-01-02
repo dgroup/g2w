@@ -1,4 +1,4 @@
-# @todo #/DEV Rename main project *.md to lower case (e.g. `README.md` -> `readme.md`)
+# @todo #/DEV Rename main project *.md to lower case (e.g. `readme.md` -> `readme.md`)
 """Python setup.py for g2w package"""
 import io
 import os
@@ -10,7 +10,7 @@ def read(*paths, **kwargs):
     """Read the contents of a text file safely.
     >>> read("g2w", "VERSION")
     '0.1.0'
-    >>> read("README.md")
+    >>> read("readme.md")
     ...
     """
 
@@ -36,7 +36,7 @@ setup(
     version=read("g2w", "VERSION"),
     description="Awesome g2w created by dgroup",
     url="https://github.com/dgroup/g2w/",
-    long_description=read("README.md"),
+    long_description=read("readme.md"),
     long_description_content_type="text/markdown",
     author="dgroup",
     packages=find_packages(exclude=["tests", ".github"]),
