@@ -25,7 +25,7 @@ jobs:
         python-version: [3.9]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
-    # @todo #/DEV Enable sonarqube inspection for python project during each commit.
+    # @todo #/DEV Enable codebeat inspection for python project during each commit. It seems that it not updating https://codebeat.co/projects/github-com-dgroup-g2w-main
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
