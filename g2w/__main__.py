@@ -1,4 +1,7 @@
-import argparse  # pragma: no cover
+# @todo #/DEV Replace requests framework by using
+#  https://github.com/juancarlospaco/faster-than-requests
+#  Their benchmarks shows that's faster, however own micro-benchmarks are
+#  required.
 import requests  # pragma: no cover
 import os  # pragma: no cover
 
@@ -7,56 +10,10 @@ import os  # pragma: no cover
 #  element is a user that represents json user from worksection.
 
 from g2w import Push
+# @todo #/DEV Add support of command line parser for program arguments
 
 
 def main() -> None:  # pragma: no cover
-    # @todo #/DEV Delete argument parser from the method below. It was
-    #  generated automatically and not helpful.
-    """
-    The main function executes on commands:
-    `python -m g2w` and `$ g2w `.
-
-    This is your program's entry point.
-
-    You can change this function to do whatever you want.
-    Examples:
-        * Run a test suite
-        * Run a server
-        * Do some other stuff
-        * Run a command line application (Click, Typer, ArgParse)
-        * List all available tasks
-        * Run an application (Flask, FastAPI, Django, etc.)
-    """
-    parser = argparse.ArgumentParser(
-        description="g2w.",
-        epilog="Enjoy the g2w functionality!",
-    )
-    # This is required positional argument
-    parser.add_argument(
-        "name",
-        type=str,
-        help="The username",
-        default="dgroup",
-    )
-    # This is optional named argument
-    parser.add_argument(
-        "-m",
-        "--message",
-        type=str,
-        help="The Message",
-        default="Hello",
-        required=False,
-    )
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help="Optionally adds verbosity",
-    )
-    args = parser.parse_args()
-    print(f"{args.message} {args.name}!")
-    if args.verbose:
-        print("Verbose mode is on.")
 
     # @todo #/DEV Create a REST endpoint that receives the Gitlab push
     #  notification through the web-hook (https://bit.ly/3sGueNt)
@@ -77,4 +34,6 @@ def main() -> None:  # pragma: no cover
 
 
 if __name__ == "__main__":  # pragma: no cover
+    # @todo #/DEV replace main method by App object that allows to build
+    #  E2E skeleton for unit testing
     main()
