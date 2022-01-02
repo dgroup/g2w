@@ -10,6 +10,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
+  # @todo #/DEV Ensure that workflow is starting for all branches and pull requests
   pull_request:
     branches: [ main ]
 

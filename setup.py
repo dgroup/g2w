@@ -3,6 +3,7 @@
 import io
 import os
 from setuptools import find_packages, setup
+# @todo #/DEV Apply readme.md format like dgroup/lazylead
 
 
 def read(*paths, **kwargs):
