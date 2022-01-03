@@ -2,15 +2,19 @@
 #  https://github.com/juancarlospaco/faster-than-requests
 #  Their benchmarks shows that's faster, however own micro-benchmarks are
 #  required.
-import requests  # pragma: no cover
-import os  # pragma: no cover
 import argparse  # pragma: no cover
+import os  # pragma: no cover
+
+import requests  # pragma: no cover
+import uvicorn  # pragma: no cover
+from fastapi import FastAPI
+
+from g2w import Push, Ws
+
 
 # @todo #/DEV Fetch users data from worksection in order to get mapping between
 #  Gitlab and WS users. It should be a class, which is collection and each
 #  element is a user that represents json user from worksection.
-
-from g2w import App, Push, Ws, Api
 
 
 # @todo #/DEV Add support of command line parser for program arguments
@@ -31,9 +35,19 @@ def main() -> None:  # pragma: no cover
     # @todo #/DEV Use environments variable for access to particular
     #  Worksection endpoints. It would be easier to config external urls on
     #  container level.
-    print(Push().html({"user": "Tom"}))
     users = requests.get(os.environ["WS_USERS_LIST"]).json()
     print(users)
+    # @todo #/DEV Add prometheus client library for app monitoring
+    #  https://github.com/prometheus/client_python
+
+
+ws = Ws()
+app = FastAPI()
+
+
+@app.post("/gitlab/push")
+def push(event: Push) -> dict:
+    return {"checkout_sha": event.checkout_sha}
 
 
 if __name__ == "__main__":  # pragma: no cover
@@ -46,4 +60,4 @@ if __name__ == "__main__":  # pragma: no cover
         default=8080,
         required=False,
     )
-    App().start(cmd.parse_args().port, Api(), Ws())
+    uvicorn.run(app, host="0.0.0.0", port=cmd.parse_args().port)
