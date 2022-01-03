@@ -1,0 +1,33 @@
+architect:
+  - dgroup
+#assets:
+#  rubygems.yml: dgroup/home#rubygems.yml
+#  circleci.header: dgroup/home#circleci.header
+#install: |
+#  export GEM_HOME=~/.ruby
+#  export GEM_PATH=$GEM_HOME:$GEM_PATH
+docker:
+  image: python:3.8.5
+release:
+  script: |-
+    set -e
+# @todo #/DEV Replace release process using rultor instead of Github Actions.
+#    export RUBYOPT="-W0"
+#    [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
+#    sed -i "s/0\.0\.0/${tag}/g" lib/lazylead/version.rb
+#    sed -i "s/0\.0\.0/${tag}/g" lazylead.gemspec
+#    bundle install --no-color
+#    bundle exec rake --trace test rubocop sqlint xcop
+#    git add lib/lazylead/version.rb lazylead.gemspec
+#    git commit -m "version set to ${tag}"
+#    gem build lazylead.gemspec
+#    chmod 0600 ../rubygems.yml
+#    gem push *.gem --config-file ../rubygems.yml
+#    curl -s -X POST --url "https://circleci.com/api/v2/project/gh/dgroup/lazylead/envvar" -H @../circleci.header -H "accept: application/json" -H "content-type: application/json" -d "{ \"name\": \"DOCKER_RELEASE_TAGS\", \"value\": \"${tag}\" }" -o /dev/null
+#    curl -s -X POST --url https://circleci.com/api/v2/project/gh/dgroup/lazylead/pipeline -H @../circleci.header -H 'accept: application/json' -H 'content-type: application/json' -H 'x-attribution-login: dgroup' -o /dev/null
+merge:
+  squash: true
+  script: |-
+    make install
+    make lint
+    make test
