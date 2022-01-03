@@ -8,8 +8,6 @@ Worksection client that allows manipulation with
 """
 
 
-# @todo #/DEV Create ctor that receives worksection connection details and
-#  connects to remote worksection instance
 class Ws:
     def __init__(
         self,

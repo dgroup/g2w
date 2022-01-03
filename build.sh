@@ -2,3 +2,4 @@
 make install
 make lint
 make test
+docker build -t dgroup/g2w:latest . -f Containerfile
