@@ -5,7 +5,6 @@
 import argparse  # pragma: no cover
 import os  # pragma: no cover
 
-import requests  # pragma: no cover
 import uvicorn  # pragma: no cover
 from fastapi import FastAPI
 
@@ -32,11 +31,6 @@ def main() -> None:  # pragma: no cover
     #  https://realpython.com/api-integration-in-python/
     #  https://worksection.com/faq/api-start.html
     print(os.environ.get("HOME", "/home/username/"))
-    # @todo #/DEV Use environments variable for access to particular
-    #  Worksection endpoints. It would be easier to config external urls on
-    #  container level.
-    users = requests.get(os.environ["WS_USERS_LIST"]).json()
-    print(users)
     # @todo #/DEV Add prometheus client library for app monitoring
     #  https://github.com/prometheus/client_python
 

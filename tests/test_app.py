@@ -1,3 +1,5 @@
+import os
+import pytest
 from fastapi.testclient import TestClient
 
 from g2w.__main__ import app
@@ -16,6 +18,10 @@ from g2w.__main__ import app
 #  - https://stackoverflow.com/a/37151805/6916890
 #  - https://stackoverflow.com/a/1396657/6916890
 #  - https://setuptools.pypa.io/en/latest/pkg_resources.html
+
+
+@pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
+@pytest.mark.skipif(os.getenv("WS_URL_POST_COMMENT") is None, reason="Environment variable 'WS_URL_POST_COMMENT' is absent")
 def test_e2e_push():
     # ws = 'http://worksection.api'
     # requests_mock.get('http://test.com', text='data')
@@ -41,7 +47,7 @@ def test_e2e_push():
                 "web_url": "http://example.com/mike/diaspora",
                 "avatar_url": None,
                 "git_ssh_url": "git@example.com:mike/diaspora.git",
-                "git_http_url": "http://example.com/mike/diaspora.git",
+                "git_http_url": "https://example.com/mike/diaspora.git",
                 "namespace": "Mike",
                 "visibility_level": 0,
                 "path_with_namespace": "mike/diaspora",
@@ -49,14 +55,14 @@ def test_e2e_push():
                 "homepage": "http://example.com/mike/diaspora",
                 "url": "git@example.com:mike/diaspora.git",
                 "ssh_url": "git@example.com:mike/diaspora.git",
-                "http_url": "http://example.com/mike/diaspora.git",
+                "http_url": "https://example.com/mike/diaspora.git",
             },
             "repository": {
                 "name": "Diaspora",
                 "url": "git@example.com:mike/diaspora.git",
                 "description": "",
                 "homepage": "http://example.com/mike/diaspora",
-                "git_http_url": "http://example.com/mike/diaspora.git",
+                "git_http_url": "https://example.com/mike/diaspora.git",
                 "git_ssh_url": "git@example.com:mike/diaspora.git",
                 "visibility_level": 0,
             },
@@ -67,8 +73,7 @@ def test_e2e_push():
                     "title": "Update Catalan translation to e38cb41.",
                     "timestamp": "2011-12-12T14:27:31+02:00",
                     "url": "http://example.com/mike/diaspora/commit/b6568db1bc1dcd7f8b4d5a946b0b91f9dacd7327",
-                    "author": {"name": "Jordi Mallach",
-                               "email": "jordi@softcatala.org"},
+                    "author": {"name": "Jordi Mallach", "email": "jordi@softcatala.org"},
                     "added": ["CHANGELOG"],
                     "modified": ["app/controller/application.rb"],
                     "removed": [],
@@ -89,7 +94,7 @@ def test_e2e_push():
                 },
             ],
             "total_commits_count": 4,
-        }
+        },
     )
     assert response.status_code == 200
-    assert response.json()['checkout_sha'] == "da1560886d4f094c3e6c9ef40349f7d38b5d27d7"
+    assert response.json()["checkout_sha"] == "da1560886d4f094c3e6c9ef40349f7d38b5d27d7"

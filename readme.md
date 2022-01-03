@@ -16,6 +16,13 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d93a4c0de9c40e5bae9633cd6fbc201)](https://www.codacy.com/gh/dgroup/g2w/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/g2w&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/g2w/branch/main/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
 
+### Docker compose 
+```yml
+    environments:
+      WS_URL_ALL_USERS: https://xxx.worksection.com/xxxx
+      WS_URL_POST_COMMENT: https://xxx.worksection.com/xxxx
+```
+
 ### Open API docs
 http://localhost:8080/docs
 
@@ -44,7 +51,7 @@ curl --request POST \
     "web_url":"http://example.com/mike/diaspora",
     "avatar_url":null,
     "git_ssh_url":"git@example.com:mike/diaspora.git",
-    "git_http_url":"http://example.com/mike/diaspora.git",
+    "git_http_url":"https://example.com/mike/diaspora.git",
     "namespace":"Mike",
     "visibility_level":0,
     "path_with_namespace":"mike/diaspora",
@@ -52,14 +59,14 @@ curl --request POST \
     "homepage":"http://example.com/mike/diaspora",
     "url":"git@example.com:mike/diaspora.git",
     "ssh_url":"git@example.com:mike/diaspora.git",
-    "http_url":"http://example.com/mike/diaspora.git"
+    "http_url":"https://example.com/mike/diaspora.git"
   },
   "repository":{
     "name": "Diaspora",
     "url": "git@example.com:mike/diaspora.git",
     "description": "",
     "homepage": "http://example.com/mike/diaspora",
-    "git_http_url":"http://example.com/mike/diaspora.git",
+    "git_http_url":"https://example.com/mike/diaspora.git",
     "git_ssh_url":"git@example.com:mike/diaspora.git",
     "visibility_level":0
   },

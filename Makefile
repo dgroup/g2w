@@ -33,11 +33,10 @@ fmt:              ## Format code using black & isort.
 .PHONY: lint
 lint:             ## Run pep8, black, mypy linters.
 	$(ENV_PREFIX)flake8 g2w/
+	$(ENV_PREFIX)black -l 79 g2w/
+	$(ENV_PREFIX)black -l 200 tests/
 	$(ENV_PREFIX)black -l 79 --check g2w/
-	# @todo #/DEV For some reason `black` is failing on test for huge *.json body requests with message
-	#  > 1 file would be reformatted, 4 files would be left unchanged.
-	#  > make: *** [lint] Error 1
-	#$(ENV_PREFIX)black -l 200 --check tests/
+	$(ENV_PREFIX)black -l 200 --check tests/
 	$(ENV_PREFIX)mypy --ignore-missing-imports g2w/
 
 .PHONY: test
