@@ -11,11 +11,6 @@ from fastapi import FastAPI
 from g2w import Push, Ws
 
 
-# @todo #/DEV Fetch users data from worksection in order to get mapping between
-#  Gitlab and WS users. It should be a class, which is collection and each
-#  element is a user that represents json user from worksection.
-
-
 # @todo #/DEV Add support of command line parser for program arguments
 
 
