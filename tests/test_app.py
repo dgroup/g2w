@@ -20,13 +20,14 @@ from g2w.__main__ import app
 #  - https://setuptools.pypa.io/en/latest/pkg_resources.html
 
 
+@pytest.mark.skipif(os.getenv("WS_EMAIL") is None, reason="Email account for worksection is absent")
 @pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
 @pytest.mark.skipif(os.getenv("WS_URL_POST_COMMENT") is None, reason="Environment variable 'WS_URL_POST_COMMENT' is absent")
 def test_e2e_push():
     # ws = 'http://worksection.api'
     # requests_mock.get('http://test.com', text='data')
     response = TestClient(app).post(
-        "/gitlab/push",
+        "/gitlab/push/223728",
         json={
             "object_kind": "push",
             "event_name": "push",
@@ -97,4 +98,4 @@ def test_e2e_push():
         },
     )
     assert response.status_code == 200
-    assert response.json()["checkout_sha"] == "da1560886d4f094c3e6c9ef40349f7d38b5d27d7"
+    assert response.json()["comments"] == []

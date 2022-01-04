@@ -27,9 +27,6 @@ def main() -> None:  # pragma: no cover
     # @todo #/DEV Choose a simple REST API framework for pure python without
     #  any massive frameworks like django or flask. Add few tests and ensure
     #  that's it easy to test.
-    # @todo #/DEV Invoke worksection REST API in order to test the E2E concept
-    #  https://realpython.com/api-integration-in-python/
-    #  https://worksection.com/faq/api-start.html
     print(os.environ.get("HOME", "/home/username/"))
     # @todo #/DEV Add prometheus client library for app monitoring
     #  https://github.com/prometheus/client_python
@@ -39,9 +36,25 @@ ws = Ws()
 app = FastAPI()
 
 
-@app.post("/gitlab/push")
-def push(event: Push) -> dict:
-    return {"checkout_sha": event.checkout_sha}
+# @todo #/DEV add logging framework and remove `print` statement everywhere
+
+
+@app.post("/gitlab/push/{project_id}")
+def push(event: Push, project_id: int) -> dict:
+    who = next((u for u in ws.all_users() if u["email"] == event.user_email))
+    if event.total_commits_count > 1:
+        msg = event.multiple_commits(who)
+    elif event.total_commits_count == 1:
+        msg = event.single_commit(who)
+    else:
+        return {
+            "status": 400,
+            "message": "g2w-001: No commits found within push event",
+        }
+    resp = []
+    for task_id in event.tasks():
+        resp.append(ws.add_comment(project_id, task_id, msg))
+    return {"comments": resp}
 
 
 if __name__ == "__main__":  # pragma: no cover
