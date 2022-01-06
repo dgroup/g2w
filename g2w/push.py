@@ -1,5 +1,6 @@
 from typing import List
 
+import airspeed
 from pydantic import BaseModel
 
 """
@@ -21,38 +22,43 @@ class Push(BaseModel):
     after: str
     checkout_sha: str
 
-    # @todo #/DEV Transform PUSH json event into HTML comment
-    #  The json format you might find here: https://bit.ly/3JvWtEx
-    #  Don't forget about unit tests from push.py as they have simple skeleton
-    #  so far.
-    def multiple_commits(self, author) -> str:
-        """
-        Allows to transform Gitlab push event about multiple commits into HTML
-        comment for worksection.
-        """
+    def push_sha(self) -> str:
+        return self.project["homepage"] + "/-/commit/" + self.checkout_sha
+
+    def quantity(self) -> str:
+        return "commits" if self.total_commits_count > 1 else "commit"
+
+    """
+    Allows to transform Gitlab push event about multiple commits into HTML
+    comment for worksection.
+    """
+
+    def comment(self, author) -> str:
+        t = """<a href="$push_url" target="_blank">$commits_count new $quantity</a>&nbsp;pushed to <b style="background: rgb(196, 255, 166)"><a href="$brach_url" target="_blank">$branch_name</a></b>&nbsp;by&nbsp; <span class="invite invite_old" rel="$user_id"><img src="$user_logo" class="av_sm av_i" width="24" height="24" alt="">$user_name</span>&nbsp;
+                <br>
+                <ul>
+                    #foreach ($commit in $commits)
+                        <li><a href="$commit_url$commit.id" target="_blank">$commit.id</a>&nbsp;-&nbsp;$commit.message</li>
+                    #end
+                </ul>
+            """  # noqa: E501
         # @todo #/DEV Find a way how to escape text in order to send it as
         #  HTTP parameter
-        return ""
-
-    def single_commit(self, author) -> str:
-        """
-        Allows to transform Gitlab push event about single commit into HTML
-        comment for worksection.
-        """
-        return ""
-
-    """
-    Worksection task ids fetched from commit messages.
-    """
+        return airspeed.Template(t).merge(
+            {
+                "push_url": self.push_sha(),
+                "commits_count": self.total_commits_count,
+                "quantity": self.quantity(),
+                "branch_url": self.ref,
+                "branch_name": self.ref,
+                "user_id": author["id"],
+                "user_logo": author["avatar"],
+                "user_name": author["name"],
+                "commits": self.commits,
+                "commit_url": self.project["homepage"] + "/-/commit/",
+            }
+        )
 
     def tasks(self) -> List[int]:
-        if self.total_commits_count <= 0:
-            raise ValueError(
-                "g2w-001: No commits found within push event",
-                self.ref,
-                self.checkout_sha,
-                self.after,
-                self.commits,
-            )
         # @todo #/DEV Detect task id from commit messages
         return []

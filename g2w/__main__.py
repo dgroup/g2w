@@ -36,20 +36,12 @@ app = FastAPI()
 
 @app.post("/gitlab/push/{project_id}")
 def push(event: Push, project_id: int) -> dict:
-    who = next((u for u in ws.all_users() if u["email"] == event.user_email))
-    if event.total_commits_count > 1:
-        msg = event.multiple_commits(who)
-    elif event.total_commits_count == 1:
-        msg = event.single_commit(who)
-    else:
-        return {
-            "status": 400,
-            "message": "g2w-001: No commits found within push event",
-        }
-    resp = []
+    author = ws.find_user(event.user_email)
+    msg = event.comment(author)
+    comments = []
     for task_id in event.tasks():
-        resp.append(ws.add_comment(project_id, task_id, msg))
-    return {"comments": resp}
+        comments.append(ws.add_comment(project_id, task_id, msg))
+    return {"comments": comments}
 
 
 if __name__ == "__main__":  # pragma: no cover

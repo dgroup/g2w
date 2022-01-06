@@ -10,3 +10,4 @@ pytest
 fastapi
 uvicorn[standard]
 pydantic
+Airspeed
