@@ -84,6 +84,7 @@ jobs:
           WS_URL_POST_COMMENT: ${{ secrets.WS_URL_POST_COMMENT }}
           WS_EMAIL: ${{ secrets.WS_EMAIL }}
           WS_ADMIN_USER_ID: ${{ secrets.WS_ADMIN_USER_ID }}
+          WS_INT_TESTS_DISABLED: true
 
   tests_win:
     needs: linter
@@ -109,6 +110,7 @@ jobs:
           WS_URL_POST_COMMENT: ${{ secrets.WS_URL_POST_COMMENT }}
           WS_EMAIL: ${{ secrets.WS_EMAIL }}
           WS_ADMIN_USER_ID: ${{ secrets.WS_ADMIN_USER_ID }}
+          WS_INT_TESTS_DISABLED: true
 
   docker:
     needs: ["linter", "tests_linux"]

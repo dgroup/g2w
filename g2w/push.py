@@ -1,8 +1,11 @@
+import re
+import urllib.parse
 from typing import List
 
-import urllib.parse
 import airspeed
 from pydantic import BaseModel
+
+commit_msg_pattern = re.compile(r"^#WS-(\d+):.+$")
 
 """
 Push event details from Gitlab.
@@ -23,6 +26,9 @@ class Push(BaseModel):
     after: str
     checkout_sha: str
 
+    """
+    Gitlab push commit SHA url
+    """
     def push_sha(self) -> str:
         return self.project["homepage"] + "/-/commit/" + self.checkout_sha
 
@@ -33,7 +39,6 @@ class Push(BaseModel):
     Allows to transform Gitlab push event about multiple commits into HTML
     comment for worksection.
     """
-
     def comment(self, author) -> str:
         t = """<a href="$push_url" target="_blank">$commits_count new $quantity</a>&nbsp;pushed to <b style="background: rgb(196, 255, 166)"><a href="$branch_url" target="_blank">$branch_name</a></b>&nbsp;by&nbsp; <span class="invite invite_old" rel="$user_id"><img src="$user_logo" class="av_sm av_i" width="24" height="24" alt="">$user_name</span>&nbsp;
                 <br>
@@ -60,6 +65,22 @@ class Push(BaseModel):
             )
         )
 
+    """
+    Extract worksection task id from Gitlab commit message
+    """
     def tasks(self) -> List[int]:
-        # @todo #/DEV Detect task id from commit messages
-        return []
+        return list(
+            filter(
+                lambda ticket_id: ticket_id > 0,
+                map(
+                    lambda m: 0 if m is None else int(m.group(1)),
+                    filter(
+                        lambda m: m is not None and int(m.group(1)) > 0,
+                        map(
+                            lambda c: commit_msg_pattern.search(c["message"]),
+                            self.commits,
+                        ),
+                    ),
+                ),
+            )
+        )

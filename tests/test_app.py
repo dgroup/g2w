@@ -81,8 +81,8 @@ def test_e2e_push():
                 },
                 {
                     "id": "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
-                    "message": "fixed readme",
-                    "title": "fixed readme",
+                    "message": "#WS-6231285: fixed readme",
+                    "title": "#WS-6231285: fixed readme",
                     "timestamp": "2012-01-03T23:36:29+02:00",
                     "url": "https://example.com/mike/diaspora/commit/da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
                     "author": {
@@ -94,8 +94,8 @@ def test_e2e_push():
                     "removed": [],
                 },
             ],
-            "total_commits_count": 4,
+            "total_commits_count": 2,
         },
     )
     assert response.status_code == 200
-    assert response.json()["comments"] == []
+    assert int(response.json()["comments"][0]["id"]) > 0

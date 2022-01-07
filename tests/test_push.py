@@ -37,8 +37,8 @@ fake_push_event = Push(
         },
         {
             "id": "da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
-            "message": "fixed readme",
-            "title": "fixed readme",
+            "message": "#WS-6231285: fixed readme",
+            "title": "#WS-6231285: fixed readme",
             "timestamp": "2012-01-03T23:36:29+02:00",
             "url": "https://example.com/mike/diaspora/commit/da1560886d4f094c3e6c9ef40349f7d38b5d27d7",
             # noqa: E501
@@ -83,3 +83,7 @@ def assert_str_has(origin: str, substr: str, msg: str = None):
         assert found, msg
     else:
         assert found, "String '{0}' contains '{1}".format(origin, substr)
+
+
+def test_task_id_is_present_as_plain_id():
+    assert fake_push_event.tasks() == [6231285]

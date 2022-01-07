@@ -16,20 +16,23 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d93a4c0de9c40e5bae9633cd6fbc201)](https://www.codacy.com/gh/dgroup/g2w/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/g2w&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/g2w/branch/main/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
 
-### Docker compose 
+#### Mandatory environment variables (docker, podman, etc.) 
 ```yml
     environments:
-      WS_URL_ALL_USERS: https://xxx.worksection.com/xxxx
-      WS_URL_POST_COMMENT: https://xxx.worksection.com/xxxx
+      WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"
+      WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx"
+      WS_EMAIL: "xxx.worksection.bot@gmail.com"
+      WS_ADMIN_USER_ID: "370080"
 ```
 
-### Open API docs
+#### Open API docs
 http://localhost:8080/docs
 
 ### Simulate push Gitlab event
+`223728` - worksection project id (read [more](/tests/test_app.py)):
 ```bash
 curl --request POST \
-  --url http://127.0.0.1:8080/gitlab/push \
+  --url http://127.0.0.1:8080/gitlab/push/223728 \
   --header 'Content-Type: application/json' \
   --data '{
   "object_kind": "push",
