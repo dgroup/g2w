@@ -3,7 +3,6 @@
 #  Their benchmarks shows that's faster, however own micro-benchmarks are
 #  required.
 import argparse  # pragma: no cover
-import os  # pragma: no cover
 
 import uvicorn  # pragma: no cover
 from fastapi import FastAPI
@@ -15,14 +14,16 @@ from g2w import Push, Ws
 
 
 def main() -> None:  # pragma: no cover
-
-    # @todo #/DEV Create a REST endpoint that receives the Gitlab push
-    #  notification through the web-hook (https://bit.ly/3sGueNt)
-    print("Executing main function")
-    # @todo #/DEV Choose a simple REST API framework for pure python without
-    #  any massive frameworks like django or flask. Add few tests and ensure
-    #  that's it easy to test.
-    print(os.environ.get("HOME", "/home/username/"))
+    cmd = argparse.ArgumentParser()
+    cmd.add_argument(
+        "-p",
+        "--port",
+        type=int,
+        help="The port to listen REST API endpoints",
+        default=8080,
+        required=False,
+    )
+    uvicorn.run(app, host="0.0.0.0", port=cmd.parse_args().port)
     # @todo #/DEV Add prometheus client library for app monitoring
     #  https://github.com/prometheus/client_python
 
@@ -46,13 +47,4 @@ def push(event: Push, project_id: int) -> dict:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    cmd = argparse.ArgumentParser()
-    cmd.add_argument(
-        "-p",
-        "--port",
-        type=int,
-        help="The port to listen REST API endpoints",
-        default=8080,
-        required=False,
-    )
-    uvicorn.run(app, host="0.0.0.0", port=cmd.parse_args().port)
+    main()

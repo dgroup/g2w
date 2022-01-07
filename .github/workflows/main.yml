@@ -125,14 +125,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # @todo #2/DEV ERROR: Command errored out with exit status 1: command: /usr/local/bin/python -u -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-cgk_ir15/httptools/setup.py'"'"'; __file__='"'"'/tmp/pip-install-cgk_ir15/httptools/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' bdist_wheel -d /tmp/pip-wheel-0qax7w_j cwd: /tmp/pip-install-cgk_ir15/httptools/
-
-#      - name: Build and push
-#        id: docker_build
-#        uses: docker/build-push-action@v2
-#        with:
-#          push: true
-#          tags: dgroup/g2w:master,dgroup/g2w:0.1.0
-#          file: ./Containerfile
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: dgroup/g2w:master,dgroup/g2w:0.1.0
+          file: ./Containerfile
           # @todo #/DEV Pass environment variables & labels like in https://github.com/dgroup/lazylead/blob/master/.docker/Dockerfile#L7-L16
           #  It seems could be done using 'labels' input https://github.com/docker/build-push-action#inputs

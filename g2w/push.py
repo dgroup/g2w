@@ -29,6 +29,7 @@ class Push(BaseModel):
     """
     Gitlab push commit SHA url
     """
+
     def push_sha(self) -> str:
         return self.project["homepage"] + "/-/commit/" + self.checkout_sha
 
@@ -39,6 +40,7 @@ class Push(BaseModel):
     Allows to transform Gitlab push event about multiple commits into HTML
     comment for worksection.
     """
+
     def comment(self, author) -> str:
         t = """<a href="$push_url" target="_blank">$commits_count new $quantity</a>&nbsp;pushed to <b style="background: rgb(196, 255, 166)"><a href="$branch_url" target="_blank">$branch_name</a></b>&nbsp;by&nbsp; <span class="invite invite_old" rel="$user_id"><img src="$user_logo" class="av_sm av_i" width="24" height="24" alt="">$user_name</span>&nbsp;
                 <br>
@@ -68,6 +70,7 @@ class Push(BaseModel):
     """
     Extract worksection task id from Gitlab commit message
     """
+
     def tasks(self) -> List[int]:
         return list(
             filter(

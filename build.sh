@@ -3,4 +3,4 @@ set -e
 make install
 make lint
 make test
-docker build -t dgroup/g2w:latest . -f Containerfile
+docker-compose up --build
