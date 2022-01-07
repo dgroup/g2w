@@ -130,7 +130,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: dgroup/g2w:master,dgroup/g2w:0.1.0
+          tags: dgroup/g2w:master,dgroup/g2w:0.1.0,dgroup/g2w:latest
           file: ./Containerfile
           # @todo #/DEV Pass environment variables & labels like in https://github.com/dgroup/lazylead/blob/master/.docker/Dockerfile#L7-L16
           #  It seems could be done using 'labels' input https://github.com/docker/build-push-action#inputs

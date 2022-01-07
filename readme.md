@@ -16,13 +16,26 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d93a4c0de9c40e5bae9633cd6fbc201)](https://www.codacy.com/gh/dgroup/g2w/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/g2w&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/g2w/branch/main/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
 
-#### Mandatory environment variables (docker, podman, etc.) 
+#### Run it
+Please note, that your `GitLab` commit messages should have the following format: `#WS-0000: The commit message`, where `0000` is worksection task id. 
 ```yml
-    environments:
-      WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"
-      WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx"
-      WS_EMAIL: "xxx.worksection.bot@gmail.com"
-      WS_ADMIN_USER_ID: "370080"
+version: "3.9"
+services:
+  g2ws:
+    image: dgroup/g2w:0.1.0
+    container_name: g2w
+    environment:
+      # Mandatory environment variables (docker, podman, etc.)
+      WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"    # https://worksection.com/faq/api-user.html#q1572
+      WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx" # https://worksection.com/faq/api-comments.html#q1575
+      WS_EMAIL: "xxx.worksection.bot@gmail.com"               # plain worksection user email
+      WS_ADMIN_USER_ID: "370080"                              # plain worksection user id
+    build:
+      dockerfile: Containerfile
+      context: .
+    ports:
+      - "8080:8080"
+    restart: always
 ```
 
 #### Open API docs
@@ -112,23 +125,3 @@ curl --request POST \
 ```bash
 pip install g2w
 ```
-
-## Usage
-
-```py
-from g2w import BaseClass
-from g2w import base_function
-
-BaseClass().base_method()
-base_function()
-```
-
-```bash
-$ python -m g2w
-#or
-$ g2w
-```
-
-## Development
-
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
