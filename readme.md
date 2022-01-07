@@ -16,32 +16,45 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d93a4c0de9c40e5bae9633cd6fbc201)](https://www.codacy.com/gh/dgroup/g2w/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/g2w&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/g2w/branch/main/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
 
-#### Run it
-Please note, that your `GitLab` commit messages should have the following format: `#WS-0000: The commit message`, where `0000` is worksection task id. 
-```yml
-version: "3.9"
-services:
-  g2ws:
-    image: dgroup/g2w:0.1.0
-    container_name: g2w
-    environment:
-      # Mandatory environment variables (docker, podman, etc.)
-      WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"    # https://worksection.com/faq/api-user.html#q1572
-      WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx" # https://worksection.com/faq/api-comments.html#q1575
-      WS_EMAIL: "xxx.worksection.bot@gmail.com"               # plain worksection user email
-      WS_ADMIN_USER_ID: "370080"                              # plain worksection user id
-    build:
-      dockerfile: Containerfile
-      context: .
-    ports:
-      - "8080:8080"
-    restart: always
-```
-
 #### Open API docs
-http://localhost:8080/docs
+Run it and all endpoints details will be available here: http://localhost:8080/docs
 
-### Simulate push Gitlab event
+#### Push notifications
+Please note, that `GitLab` commit messages must have the following format: `#WS-0000: The commit message`, where `0000` is worksection task id.
+1. Deploy locally g2w
+    ```yml
+    version: "3.9"
+    services:
+      g2ws:
+        image: dgroup/g2w:0.1.0
+        container_name: g2w
+        environment:
+          # Mandatory environment variables (docker, podman, etc.)
+          WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"    # https://worksection.com/faq/api-user.html#q1572
+          WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx" # https://worksection.com/faq/api-comments.html#q1575
+          WS_EMAIL: "xxx.worksection.bot@gmail.com"               # plain worksection user email
+          WS_ADMIN_USER_ID: "370080"                              # plain worksection user id
+        build:
+          dockerfile: Containerfile
+          context: .
+        ports:
+          - "8080:8080"
+        restart: always
+    ```
+2. Configure webhook with `Push events` in Gitlab: 
+   1. Open `project > Settings > Webhook` 
+   2. Specify URL http://yourserverwith-g2w:8080/gitlab/push/223728, where `223728` is your worksection project id
+   3. Ensure that `Push events` option is selected
+   4. Press [`Add webhook`]
+3. Configure reference to Worksection tasks from commits in Gitlab: 
+   1. Open `project > Settings > Integrations > Custom issue tracker`
+   2. Set `Project URL` like https://xxx.worksection.com/project/223728/, where `223728` is your worksection project id
+   3. Set `Issue URL` like https://xxx.worksection.com/project/223728/:id
+   4. Set `New issue URL` like https://xxx.worksection.com/project/223728/new/
+   5. Press [`Save changes`]
+4. Push commit(s) with following commit message format `#WS-0000: The commit message` format (`0000` is worksection task id) to your Gitlab project.
+
+#### Simulate push Gitlab event
 `223728` - worksection project id (read [more](/tests/test_app.py)):
 ```bash
 curl --request POST \
