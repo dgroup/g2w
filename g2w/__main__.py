@@ -39,6 +39,7 @@ def push(event: Push, project_id: int) -> dict:
     author = ws.find_user(event.user_email)
     msg = event.comment(author)
     comments = []
+    # @todo #/DEV Return 400 if no WS tasks found within commit messages
     for task_id in event.tasks():
         comments.append(ws.add_comment(project_id, task_id, msg))
     return {"comments": comments}

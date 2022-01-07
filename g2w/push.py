@@ -1,5 +1,6 @@
 from typing import List
 
+import urllib.parse
 import airspeed
 from pydantic import BaseModel
 
@@ -34,7 +35,7 @@ class Push(BaseModel):
     """
 
     def comment(self, author) -> str:
-        t = """<a href="$push_url" target="_blank">$commits_count new $quantity</a>&nbsp;pushed to <b style="background: rgb(196, 255, 166)"><a href="$brach_url" target="_blank">$branch_name</a></b>&nbsp;by&nbsp; <span class="invite invite_old" rel="$user_id"><img src="$user_logo" class="av_sm av_i" width="24" height="24" alt="">$user_name</span>&nbsp;
+        t = """<a href="$push_url" target="_blank">$commits_count new $quantity</a>&nbsp;pushed to <b style="background: rgb(196, 255, 166)"><a href="$branch_url" target="_blank">$branch_name</a></b>&nbsp;by&nbsp; <span class="invite invite_old" rel="$user_id"><img src="$user_logo" class="av_sm av_i" width="24" height="24" alt="">$user_name</span>&nbsp;
                 <br>
                 <ul>
                     #foreach ($commit in $commits)
@@ -42,21 +43,21 @@ class Push(BaseModel):
                     #end
                 </ul>
             """  # noqa: E501
-        # @todo #/DEV Find a way how to escape text in order to send it as
-        #  HTTP parameter
-        return airspeed.Template(t).merge(
-            {
-                "push_url": self.push_sha(),
-                "commits_count": self.total_commits_count,
-                "quantity": self.quantity(),
-                "branch_url": self.ref,
-                "branch_name": self.ref,
-                "user_id": author["id"],
-                "user_logo": author["avatar"],
-                "user_name": author["name"],
-                "commits": self.commits,
-                "commit_url": self.project["homepage"] + "/-/commit/",
-            }
+        return urllib.parse.quote_plus(
+            airspeed.Template(t).merge(
+                {
+                    "push_url": self.push_sha(),
+                    "commits_count": self.total_commits_count,
+                    "quantity": self.quantity(),
+                    "branch_url": self.ref,
+                    "branch_name": self.ref,
+                    "user_id": author["id"],
+                    "user_logo": author["avatar"],
+                    "user_name": author["name"],
+                    "commits": self.commits,
+                    "commit_url": self.project["homepage"] + "/-/commit/",
+                }
+            )
         )
 
     def tasks(self) -> List[int]:
