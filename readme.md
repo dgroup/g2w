@@ -26,6 +26,14 @@ Since this moment all commit messages should have the following format `#WS-0000
 
 #### Open API docs
 Run it and all endpoints details will be available here: http://localhost:8080/docs
+```bash
+> python g2w
+...                                                                                                                                                
+INFO:     Started server process [86248]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+```
 
 #### Push notifications
 Please note, that `GitLab` commit messages must have the following format: `#WS-0000: The commit message`, where `0000` is worksection task id.
