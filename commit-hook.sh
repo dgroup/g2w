@@ -37,5 +37,4 @@ if ! ${refname} | egrep -qi ${commit_regex} ; then
     exit 1
 fi
 
-
 exit 0
