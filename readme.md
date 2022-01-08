@@ -16,6 +16,14 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d93a4c0de9c40e5bae9633cd6fbc201)](https://www.codacy.com/gh/dgroup/g2w/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/g2w&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/g2w/branch/main/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
 
+#### What is Worksection?
+[Worksection](https://worksection.com) is a simple, lightweight task tracking system that provides:
+ * Project and task management, planning and controlling, team organization
+ * Flexible interface, recurring processes, time-tracking
+ * Privacy settings, client companies, communication
+
+Check it out.
+
 #### Worksection task id in Git commit messages
 Use [commit-msg](commit-msg) file to force your developers to have worksection task id during commits.
 Just copy this file to your git repo as
