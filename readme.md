@@ -17,11 +17,10 @@
 [![Codecov](https://codecov.io/gh/dgroup/g2w/branch/main/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
 
 #### Worksection task id in Git commit messages
-Use [commit-hook.sh](commit-hook.sh) to force your developers to have worksection task id during commits.
+Use [commit-msg](commit-msg) file to force your developers to have worksection task id during commits.
 Just copy this file to your git repo as
 ```bash
-cp commit-hook.sh <your-git-repo>/.git/hook/update      # on Git server directly (server-side commit)
-cp commit-hook.sh <your-git-repo>/.git/hook/pre-commit  # on Git server directly (server-side commit)
+cp commit-msg <your-git-repo>/.git/hook/commit-msg   # on Git server directly (server-side commit)
 ```
 Since this moment all commit messages should have the following format `#WS-0000: The commit message`, where `0000` is worksection task id.
 
