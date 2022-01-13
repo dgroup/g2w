@@ -9,7 +9,7 @@ from setuptools import find_packages, setup
 def read(*paths, **kwargs):
     """Read the contents of a text file safely.
     >>> read("g2w", "VERSION")
-    '0.1.0'
+    '0.0.0'
     >>> read("readme.md")
     ...
     """
@@ -38,7 +38,7 @@ setup(
     url="https://github.com/dgroup/g2w/",
     long_description=read("readme.md"),
     long_description_content_type="text/markdown",
-    author="dgroup",
+    author="lazylead",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
     entry_points={
