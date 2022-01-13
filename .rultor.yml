@@ -17,11 +17,12 @@ release:
     python -m pip install --upgrade pip
     pip install setuptools wheel twine
     python setup.py sdist bdist_wheel
-# @todo #/DEV Activate linting process during release flake8, black, mypy
     make install test
     git add g2w/VERSION setup.py .github/workflows/master.yml
     git commit -m "version set to ${tag}"
     twine --config-file=../.pypirc upload dist/*
+
+# @todo #/DEV Activate linting process during release flake8, black, mypy
 
 # @todo #/DEV Invoke from rultor the docker build&push process through the Github actions
 
