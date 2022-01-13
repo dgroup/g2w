@@ -17,9 +17,8 @@ release:
     python -m pip install --upgrade pip
     pip install setuptools wheel twine
     python setup.py sdist bdist_wheel
-    make install
-    make lint
-    make test
+# @todo #/DEV Activate linting process during release flake8, black, mypy
+    make install test
     git add g2w/VERSION setup.py .github/workflows/master.yml
     git commit -m "version set to ${tag}"
     twine --config-file=../.pypirc upload dist/*
