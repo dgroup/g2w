@@ -4,17 +4,17 @@
 [![](https://img.shields.io/docker/pulls/dgroup/g2w.svg)](https://hub.docker.com/r/dgroup/g2w "Image pulls")
 [![](https://images.microbadger.com/badges/image/dgroup/g2w.svg)](https://microbadger.com/images/dgroup/g2w "Image layers")
 [![Commit activity](https://img.shields.io/github/commit-activity/y/dgroup/g2w.svg?style=flat-square)](https://github.com/dgroup/g2w/graphs/commit-activity)
-[![Hits-of-Code](https://hitsofcode.com/github/dgroup/g2w?branch=main)](https://hitsofcode.com/view/github/dgroup/g2w?branch=main)
+[![Hits-of-Code](https://hitsofcode.com/github/dgroup/g2w?branch=master)](https://hitsofcode.com/view/github/dgroup/g2w?branch=master)
 
-[![CI](https://github.com/dgroup/g2w/actions/workflows/main.yml/badge.svg)](https://github.com/dgroup/g2w/actions/workflows/main.yml)
+[![CI](https://github.com/dgroup/g2w/actions/workflows/master.yml/badge.svg)](https://github.com/dgroup/g2w/actions/workflows/master.yml)
 [![0pdd](http://www.0pdd.com/svg?name=dgroup/g2w)](http://www.0pdd.com/p?name=dgroup/g2w)
-[![Dependency Status](https://requires.io/github/dgroup/g2w/requirements.svg?branch=main)](https://requires.io/github/dgroup/g2w/requirements/?branch=main)
+[![Dependency Status](https://requires.io/github/dgroup/g2w/requirements.svg?branch=master)](https://requires.io/github/dgroup/g2w/requirements/?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/dgroup/g2w/badge.svg)](https://app.snyk.io/org/dgroup/project/97a5d0de-3c9f-40ef-8ed6-42370d7a3330)
 
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=dgroup_g2w\&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=dgroup_g2w)
-[![Codebeat Badge](https://codebeat.co/badges/76acc08d-e3e2-486d-b377-aee722b58717)](https://codebeat.co/projects/github-com-dgroup-g2w-main)
+[![Codebeat Badge](https://codebeat.co/badges/76acc08d-e3e2-486d-b377-aee722b58717)](https://codebeat.co/projects/github-com-dgroup-g2w-master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/7d93a4c0de9c40e5bae9633cd6fbc201)](https://www.codacy.com/gh/dgroup/g2w/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/g2w&amp;utm_campaign=Badge_Grade)
-[![Codecov](https://codecov.io/gh/dgroup/g2w/branch/main/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
+[![Codecov](https://codecov.io/gh/dgroup/g2w/branch/master/graph/badge.svg?token=PSTG3JNRX6)](https://codecov.io/gh/dgroup/g2w)
 
 #### What is Worksection?
 [Worksection](https://worksection.com) is a simple, lightweight task tracking system that provides:
