@@ -1,0 +1,4 @@
+# This requirements are for CI/CD procedure
+setuptools
+wheel
+twine
