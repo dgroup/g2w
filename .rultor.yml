@@ -10,6 +10,7 @@ docker:
 release:
   script: |-
     export WS_INT_TESTS_DISABLED=true
+    export PATH="/home/r/.local/bin:$PATH"
     set -e
     [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
     sed -i "s/0\.0\.0/${tag}/g" g2w/VERSION
@@ -20,7 +21,8 @@ release:
     git commit -m "version set to ${tag}"
     python -m pip install --upgrade pip
     pip install setuptools wheel twine
-    /home/r/.local/bin/twine upload --config-file=../.pypirc dist/*
+    python setup.py sdist bdist_wheel
+    twine upload --config-file=../.pypirc dist/*
 
 # @todo #/DEV Invoke from rultor the docker build&push process through the Github actions
 
