@@ -106,7 +106,6 @@ switch-to-poetry: ## Switch to poetry package manager.
 	@echo "g2w = 'g2w.__main__:main'" >> pyproject.toml
 	@cat requirements.txt | while read in; do poetry add --no-interaction "$${in}"; done
 	@cat requirements-test.txt | while read in; do poetry add --no-interaction "$${in}" --dev; done
-	@cat requirements-ci.txt | while read in; do poetry add --no-interaction "$${in}" --dev; done
 	@poetry install --no-interaction
 	@mkdir -p .github/backup
 	@mv requirements* .github/backup
