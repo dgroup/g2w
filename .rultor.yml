@@ -20,7 +20,7 @@ release:
     git commit -m "version set to ${tag}"
     python -m pip install --upgrade pip
     pip install setuptools wheel twine
-    /home/r/.local/bin/twine --config-file=../.pypirc upload dist/*
+    /home/r/.local/bin/twine upload --config-file=../.pypirc dist/*
 
 # @todo #/DEV Invoke from rultor the docker build&push process through the Github actions
 
