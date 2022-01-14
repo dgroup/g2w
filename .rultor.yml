@@ -16,12 +16,11 @@ release:
     sed -i "s/0\.0\.0/${tag}/g" setup.py
     sed -i "s/0\.0\.0/${tag}/g" .github/workflows/master.yml
     make virtualenv install test
-    python -m pip install --upgrade pip
-    pip install setuptools wheel twine
-    pip show twine
     git add g2w/VERSION setup.py .github/workflows/master.yml
     git commit -m "version set to ${tag}"
-    twine --config-file=../.pypirc upload dist/*
+    python -m pip install --upgrade pip
+    pip install setuptools wheel twine
+    /home/r/.local/bin/twine --config-file=../.pypirc upload dist/*
 
 # @todo #/DEV Invoke from rultor the docker build&push process through the Github actions
 
