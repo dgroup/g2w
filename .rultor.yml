@@ -14,7 +14,7 @@ release:
     sed -i "s/0\.0\.0/${tag}/g" g2w/VERSION
     sed -i "s/0\.0\.0/${tag}/g" setup.py
     sed -i "s/0\.0\.0/${tag}/g" .github/workflows/master.yml
-    make install test
+    make virtualenv install test
     python -m pip install --upgrade pip
     pip install setuptools wheel twine
     python setup.py sdist bdist_wheel
