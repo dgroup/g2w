@@ -10,4 +10,3 @@ mypy
 gitchangelog
 mkdocs
 requests
-twine
