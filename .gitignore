@@ -73,6 +73,7 @@ docs/_build/
 
 # PyBuilder
 target/
+dist/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -130,3 +131,5 @@ dmypy.json
 
 # templates
 .github/templates/*
+
+.local

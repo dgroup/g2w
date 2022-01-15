@@ -6,13 +6,15 @@ services:
     environment:
       WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"
       WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx"
+      WS_URL_POST_TASK: "https://xxx.worksection.com/xxxx"
       WS_ADMIN_EMAIL: "xxx.worksection.bot@gmail.com"
       WS_ADMIN_USER_ID: "370080"
-      WS_PRJ_223728_HASH: "xxx"
+      WS_PRJ_223728_POST_TASK_HASH: "23e1sdfj2323"
+      WS_PRJ_223728_POST_COMMENT_HASH: "2312jsafajsdf"
     build:
       dockerfile: Containerfile
       context: .
-    entrypoint: g2w --log=DEBUG
+    entrypoint: g2w
     ports:
       - "8080:8080"
     restart: always

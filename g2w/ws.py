@@ -5,19 +5,19 @@ from typing import List
 import requests  # pragma: no cover
 
 
-def get_hash(prj) -> str:
-    """
-    Fetch project hash from environment variable.
-    The naming format is 'WS_PRJ_0000_HASH', where '0000' is project id:
-      WS_PRJ_0001_HASH: 12fjasdfsdfhk34hsdf
-      WS_PRJ_0002_HASH: asf324i324jdfi23hfd
-      ...
-    """
-    val = os.getenv(f"WS_PRJ_{prj}_HASH")
+def env(key) -> str:
+    val = os.getenv(key)
     if val is None:
-        logging.error("g2w-003: No hash found for project id '%'", prj)
-        raise ValueError("g2w-003: No hash found for project id '%'", prj)
+        raise ValueError(f"g2w-003: Environment variable '{key}' not found")
     return val
+
+
+def ws_admin_email() -> str:
+    return env("WS_ADMIN_EMAIL")
+
+
+def ws_admin_userid() -> str:
+    return env("WS_ADMIN_USER_ID")
 
 
 def post(req) -> dict:
@@ -27,53 +27,18 @@ def post(req) -> dict:
     resp = requests.post(req).json()
     # @todo #58/DEV Ensure that logging is enabled for this method as well.
     logging.debug("WS req: '%s', resp: '%s'", req, resp)
-    return resp
+    if resp["status"] == "ok":
+        return resp["data"]
+    else:
+        return resp
 
 
 class Ws:
     """
     Worksection client that allows manipulation with
     """
-    def __init__(
-        self,
-        email=os.getenv("WS_ADMIN_EMAIL"),
-        system_user_id=os.getenv("WS_ADMIN_USER_ID"),
-        all_users=os.getenv("WS_URL_ALL_USERS"),
-        post_comment=os.getenv("WS_URL_POST_COMMENT"),
-    ):
-        self.system_email = email
-        self.system_user_id = system_user_id
-        self.url_all_users = all_users
-        self.url_post_comment = post_comment
 
     users: List[dict] = []
-
-    def all_users(self) -> List[dict]:
-        """
-        Fetch all users from worksection space.
-        """
-        if not self.users:
-            # @todo #/DEV use memorize feature/approach instead of own caching.
-            self.users.extend(requests.get(self.url_all_users).json()["data"])
-        return self.users
-
-    def add_comment(self, prj: int, task: int, body: str) -> dict:
-        """
-        Add a comment to a particular worksection task id.
-        """
-        resp = post(self.post_comment_url(prj, task, body))
-        if resp["status"] == "ok":
-            return resp["data"]
-        else:
-            return resp
-
-    def post_comment_url(self, prj, task, body) -> str:
-        """
-        Construct URL for posting comments.
-        """
-        return self.url_post_comment.format(
-            prj, task, self.system_email, body, get_hash(prj)
-        )
 
     def find_user(self, email: str) -> dict:
         """
@@ -83,11 +48,51 @@ class Ws:
         user = next((u for u in self.all_users() if u["email"] == email), None)
         if user is not None:
             return user
-        if self.system_user_id is None:
-            raise ValueError(
-                "g2w-002: No user found with email {0}".format(email)
-            )
         else:
             return next(
-                (u for u in self.all_users() if u["id"] == self.system_user_id)
+                (u for u in self.all_users() if u["id"] == ws_admin_userid())
             )
+
+    def all_users(self) -> List[dict]:
+        """
+        Fetch all users from worksection space.
+        """
+        if not self.users:
+            # @todo #/DEV use memorize feature/approach instead of own caching.
+            self.users.extend(
+                requests.get(env("WS_URL_ALL_USERS")).json()["data"]
+            )
+        return self.users
+
+    def add_comment(self, prj: int, task: int, body: str) -> dict:
+        """
+        Add a comment to a particular worksection task id.
+        """
+        return post(self.post_comment_url(prj, task, body))
+
+    def post_comment_url(self, prj, task, body) -> str:
+        """
+        Construct URL for posting comments.
+        """
+        return env("WS_URL_POST_COMMENT").format(
+            prj,
+            task,
+            ws_admin_email(),
+            body,
+            env(f"WS_PRJ_{prj}_POST_COMMENT_HASH"),
+        )
+
+    def add_task(self, prj, subj, body) -> dict:
+        """
+        Add a ticket to a particular worksection project.
+        """
+        return post(self.post_task_url(prj, subj, body))
+
+    def post_task_url(self, prj, subj, body) -> str:
+        return env("WS_URL_POST_TASK").format(
+            prj,
+            subj,
+            ws_admin_email(),
+            body,
+            env(f"WS_PRJ_{prj}_POST_TASK_HASH"),
+        )
