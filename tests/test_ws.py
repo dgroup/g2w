@@ -30,13 +30,3 @@ def test_add_comment():
         )["id"]
         is not None
     )
-
-
-@pytest.mark.skipif(os.getenv("WS_PRJ_1010_HASH") is None, reason="Environment variable 'WS_PRJ_1010_HASH' is absent")
-def test_post_comment_url():
-    assert (
-        Ws(post_comment="https://test.ws.com/api/admin/v2/?action=post_comment&page=/project/{0}/{1}/&email_user_from={2}&text={3}&hash={4}", email="admin@here.com").post_comment_url(
-            1010, 1234, "text"
-        )
-        == "https://test.ws.com/api/admin/v2/?action=post_comment&page=/project/1010/1234/&email_user_from=admin@here.com&text=text&hash=1fsasdfj"
-    )

@@ -56,9 +56,11 @@ Please note, that `GitLab` commit messages must have the following format: `#WS-
           # Mandatory environment variables (docker, podman, etc.)
           WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"    # https://worksection.com/faq/api-user.html#q1572
           WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx" # https://worksection.com/faq/api-comments.html#q1575
+          WS_URL_POST_TASK: "https://xxx.worksection.com/xxxx"    # https://worksection.com/faq/api-task.html#q1577
           WS_ADMIN_EMAIL: "xxx.worksection.bot@gmail.com"         # plain worksection user email
           WS_ADMIN_USER_ID: "370080"                              # plain worksection user id
-          WS_PRJ_223728_HASH: "xxx"                               # HASH generated for a particular Worksection project
+          WS_PRJ_223728_POST_TASK_HASH: "23e1sdfj2323"            # HASH generated for new task action for a particular project
+          WS_PRJ_223728_POST_COMMENT_HASH: "2312jsafajsdf"        # HASH generated for new comment action for a particular project
         build:
           dockerfile: Containerfile
           context: .
