@@ -10,7 +10,7 @@ from .test_push import fake_push_event
 
 
 @pytest.mark.skipif(os.getenv("WS_INT_TESTS_DISABLED") is not None, reason="Integration tests are disabled")
-@pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is not None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
+@pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
 def test_users():
     assert len(Ws().all_users()) > 20
 
