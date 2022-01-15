@@ -50,14 +50,15 @@ Please note, that `GitLab` commit messages must have the following format: `#WS-
     version: "3.9"
     services:
       g2ws:
-        image: dgroup/g2w:0.1.0
+        image: dgroup/g2w:0.2.0
         container_name: g2w
         environment:
           # Mandatory environment variables (docker, podman, etc.)
           WS_URL_ALL_USERS: "https://xxx.worksection.com/xxxx"    # https://worksection.com/faq/api-user.html#q1572
           WS_URL_POST_COMMENT: "https://xxx.worksection.com/xxxx" # https://worksection.com/faq/api-comments.html#q1575
-          WS_EMAIL: "xxx.worksection.bot@gmail.com"               # plain worksection user email
+          WS_ADMIN_EMAIL: "xxx.worksection.bot@gmail.com"         # plain worksection user email
           WS_ADMIN_USER_ID: "370080"                              # plain worksection user id
+          WS_PRJ_223728_HASH: "xxx"                               # HASH generated for a particular Worksection project
         build:
           dockerfile: Containerfile
           context: .
@@ -162,3 +163,6 @@ curl --request POST \
 ```bash
 pip install g2w
 ```
+
+## Materials & Links
+* http://www.md5.cz - generate WS hash

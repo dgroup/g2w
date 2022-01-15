@@ -20,7 +20,7 @@ from g2w.__main__ import app
 #  - https://setuptools.pypa.io/en/latest/pkg_resources.html
 
 
-@pytest.mark.skipif(os.getenv("WS_EMAIL") is None, reason="Email account for worksection is absent")
+@pytest.mark.skipif(os.getenv("WS_ADMIN_EMAIL") is None, reason="Environment variable 'WS_ADMIN_EMAIL' is absent")
 @pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
 @pytest.mark.skipif(os.getenv("WS_URL_POST_COMMENT") is None, reason="Environment variable 'WS_URL_POST_COMMENT' is absent")
 @pytest.mark.skipif(os.getenv("WS_INT_TESTS_DISABLED") is not None, reason="Integration tests are disabled")

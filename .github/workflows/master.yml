@@ -58,8 +58,10 @@ jobs:
         env:
           WS_URL_ALL_USERS: ${{ secrets.WS_URL_ALL_USERS }}
           WS_URL_POST_COMMENT: ${{ secrets.WS_URL_POST_COMMENT }}
-          WS_EMAIL: ${{ secrets.WS_EMAIL }}
+          WS_ADMIN_EMAIL: ${{ secrets.WS_EMAIL }}
           WS_ADMIN_USER_ID: ${{ secrets.WS_ADMIN_USER_ID }}
+          WS_PRJ_223728_HASH: ${{ secrets.WS_PRJ_223728_HASH }}
+          WS_PRJ_1010_HASH: ${{ secrets.WS_PRJ_1010_HASH }}
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v2.1.0
         # with:
@@ -85,7 +87,7 @@ jobs:
         env:
           WS_URL_ALL_USERS: ${{ secrets.WS_URL_ALL_USERS }}
           WS_URL_POST_COMMENT: ${{ secrets.WS_URL_POST_COMMENT }}
-          WS_EMAIL: ${{ secrets.WS_EMAIL }}
+          WS_ADMIN_EMAIL: ${{ secrets.WS_EMAIL }}
           WS_ADMIN_USER_ID: ${{ secrets.WS_ADMIN_USER_ID }}
           WS_INT_TESTS_DISABLED: true
 
@@ -111,7 +113,7 @@ jobs:
         env:
           WS_URL_ALL_USERS: ${{ secrets.WS_URL_ALL_USERS }}
           WS_URL_POST_COMMENT: ${{ secrets.WS_URL_POST_COMMENT }}
-          WS_EMAIL: ${{ secrets.WS_EMAIL }}
+          WS_ADMIN_EMAIL: ${{ secrets.WS_EMAIL }}
           WS_ADMIN_USER_ID: ${{ secrets.WS_ADMIN_USER_ID }}
           WS_INT_TESTS_DISABLED: true
 

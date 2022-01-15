@@ -6,8 +6,9 @@ import argparse  # pragma: no cover
 
 import uvicorn  # pragma: no cover
 from fastapi import FastAPI
+from fastapi.routing import APIRouter
 
-from g2w import Push, Ws
+from g2w import Push, Ws, LoggableRoute
 
 
 # @todo #/DEV Add support of command line parser for program arguments
@@ -30,13 +31,15 @@ def main() -> None:  # pragma: no cover
 
 ws = Ws()
 app = FastAPI()
+router = APIRouter(route_class=LoggableRoute)
 
 
 # @todo #/DEV add logging framework and remove `print` statement everywhere
 
 
-@app.post("/gitlab/push/{project_id}")
+@router.post("/gitlab/push/{project_id}")
 def push(event: Push, project_id: int) -> dict:
+
     author = ws.find_user(event.user_email)
     msg = event.comment(author)
     comments = []
@@ -45,6 +48,8 @@ def push(event: Push, project_id: int) -> dict:
         comments.append(ws.add_comment(project_id, task_id, msg))
     return {"comments": comments}
 
+
+app.include_router(router)
 
 if __name__ == "__main__":  # pragma: no cover
     main()
