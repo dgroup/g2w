@@ -31,5 +31,5 @@ release:
 merge:
   squash: true
   script: |-
-    make install
-    make test
+    export PATH="/home/r/.local/bin:$PATH"
+    make virtualenv install test
