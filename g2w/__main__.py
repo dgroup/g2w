@@ -7,18 +7,22 @@ import argparse  # pragma: no cover
 import uvicorn  # pragma: no cover
 from fastapi import Request, FastAPI
 from fastapi.routing import APIRouter
-from g2w import Push, Ws, LoggableRoute, Alert
+
+from g2w import Push, Ws, LoggableRoute, Alert, __version__
 
 # @todo #/DEV Add support of command line parser for program arguments
 ws = Ws()
-app = FastAPI()
+app = FastAPI(version=__version__, title="g2w")
 router = APIRouter(route_class=LoggableRoute)
 
 
 # @todo #/DEV add logging framework and remove `print` statement everywhere
 
 
-@router.post("/gitlab/push/{project_id}")
+@router.post(
+    path="/gitlab/push/{project_id}",
+    summary="Create a comment in worksection task from Gitlab push event",
+)
 def push(event: Push, project_id: int) -> dict:
     author = ws.find_user(event.user_email)
     msg = event.comment(author)
@@ -29,11 +33,15 @@ def push(event: Push, project_id: int) -> dict:
     return {"comments": comments}
 
 
-@router.post("/grafana/alert/{project_id}")
+@router.post(
+    path="/grafana/alert/{project_id}",
+    summary="Create a ticket in worksection from Grafana's alert",
+)
 async def alert(event: Request, project_id: int) -> dict:
     # @todo #/DEV Replace plain json in ticket summary by more sophisticated
     #  object with proper formatting
     alert = Alert()
+    # @todo #/DEV Return the direct answer from Worksection instead of wrapping
     return {
         "created": ws.add_task(
             project_id, alert.subject(), alert.desc(await event.json())

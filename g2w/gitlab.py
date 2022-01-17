@@ -42,7 +42,7 @@ class Push(BaseModel):
     def branch_url(self) -> str:
         prefix = "refs/heads/"
         if self.ref.index(prefix) == 0:
-            branch = self.ref[len(prefix):]
+            branch = self.ref[len(prefix) :]
         else:
             branch = self.ref
         return self.project["homepage"] + "/tree/" + branch
