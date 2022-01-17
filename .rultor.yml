@@ -13,8 +13,7 @@ release:
     export PATH="/home/r/.local/bin:$PATH"
     set -e
     [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
-    sed -i "s/0\.0\.0/${tag}/g" g2w/VERSION
-    sed -i "s/0\.0\.0/${tag}/g" setup.py
+    sed -i "s/0\.0\.0/${tag}/g" g2w/version.py
     sed -i "s/0\.0\.0/${tag}/g" .github/workflows/master.yml
     make virtualenv install test
     git add g2w/VERSION setup.py .github/workflows/master.yml
