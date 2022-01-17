@@ -87,3 +87,7 @@ def assert_str_has(origin: str, substr: str, msg: str = None):
 
 def test_task_id_is_present_as_plain_id():
     assert fake_push_event.tasks() == [6231285]
+
+
+def test_branch_url():
+    assert fake_push_event.branch_url() == "https://example.com/mike/diaspora/tree/master"  # noqa: E501

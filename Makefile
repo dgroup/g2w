@@ -32,7 +32,8 @@ fmt:              ## Format code using black & isort.
 
 .PHONY: lint
 lint:             ## Run pep8, black, mypy linters.
-	$(ENV_PREFIX)flake8 g2w/
+	# E203 is not PEP8 compliant https://github.com/psf/black/issues/315#issuecomment-395457972
+	$(ENV_PREFIX)flake8 --ignore=E203 g2w/
 	$(ENV_PREFIX)black -l 79 g2w/
 	$(ENV_PREFIX)black -l 200 tests/
 	$(ENV_PREFIX)black -l 79 --check g2w/

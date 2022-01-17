@@ -30,15 +30,22 @@ class Push(BaseModel):
     after: str
     checkout_sha: str
 
-    """
-    Gitlab push commit SHA url
-    """
-
     def push_sha(self) -> str:
+        """
+        Gitlab push commit SHA url
+        """
         return self.project["homepage"] + "/-/commit/" + self.checkout_sha
 
     def quantity(self) -> str:
         return "commits" if self.total_commits_count > 1 else "commit"
+
+    def branch_url(self) -> str:
+        prefix = "refs/heads/"
+        if self.ref.index(prefix) == 0:
+            branch = self.ref[len(prefix):]
+        else:
+            branch = self.ref
+        return self.project["homepage"] + "/tree/" + branch
 
     """
     Allows to transform Gitlab push event about multiple commits into HTML
@@ -60,7 +67,7 @@ class Push(BaseModel):
                     "push_url": self.push_sha(),
                     "commits_count": self.total_commits_count,
                     "quantity": self.quantity(),
-                    "branch_url": self.ref,
+                    "branch_url": self.branch_url(),
                     "branch_name": self.ref,
                     "user_id": author["id"],
                     "user_logo": author["avatar"],
