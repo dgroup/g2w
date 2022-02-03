@@ -1,6 +1,7 @@
 [![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./license.txt)
 [![Versions](https://img.shields.io/badge/semver-2.0-green)](https://semver.org/spec/v2.0.0.html)
 [![PyPI version](https://badge.fury.io/py/g2w.svg)](https://badge.fury.io/py/g2w)
+[![Downloads](https://pepy.tech/badge/g2w)](https://pepy.tech/project/g2w)
 [![](https://img.shields.io/docker/pulls/dgroup/g2w.svg)](https://hub.docker.com/r/dgroup/g2w "Image pulls")
 [![](https://images.microbadger.com/badges/image/dgroup/g2w.svg)](https://microbadger.com/images/dgroup/g2w "Image layers")
 [![Commit activity](https://img.shields.io/github/commit-activity/y/dgroup/g2w.svg?style=flat-square)](https://github.com/dgroup/g2w/graphs/commit-activity)
@@ -158,6 +159,15 @@ curl --request POST \
   ],
   "total_commits_count": 4
 }'
+```
+## Build
+```bash
+# Using *.sh file on Linux, Unix, OSX
+> ./build.sh
+
+# Using make
+make virtualenv install test
+
 ```
 
 ## Install it from PyPI
