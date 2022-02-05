@@ -1,9 +1,12 @@
 import re
 import urllib.parse
+import logging
 from typing import List
 
 import airspeed
 from pydantic import BaseModel
+logger = logging.getLogger("uvicorn")
+logger.setLevel(logging.DEBUG)
 
 # @todo #/DEV Worksection task id in the middle (or end) might be in message
 #  not only at the begining. It could be in the middle or end. It would be good
@@ -34,9 +37,11 @@ class Push(BaseModel):
         """
         Gitlab push commit SHA url
         """
+        logger.debug("Gitlab push commit SHA url")
         return self.project["homepage"] + "/-/commit/" + self.checkout_sha
 
     def quantity(self) -> str:
+        logger.debug("Returning quantity of commits")
         return "commits" if self.total_commits_count > 1 else "commit"
 
     def branch_url(self) -> str:
@@ -45,6 +50,7 @@ class Push(BaseModel):
             branch = self.ref[len(prefix) :]
         else:
             branch = self.ref
+        logger.debug("Returning branch url")
         return self.project["homepage"] + "/tree/" + branch
 
     """
@@ -61,6 +67,7 @@ class Push(BaseModel):
                     #end
                 </ul>
             """  # noqa: E501
+        logger.debug("Leaving a comment")
         return urllib.parse.quote_plus(
             airspeed.Template(t).merge(
                 {
@@ -83,6 +90,7 @@ class Push(BaseModel):
     """
 
     def tasks(self) -> List[int]:
+        logger.debug("Extract worksection task id from Gitlab commit message")
         return list(
             filter(
                 lambda ticket_id: ticket_id > 0,

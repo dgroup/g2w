@@ -3,9 +3,12 @@ import os  # pragma: no cover
 from typing import List
 
 import requests  # pragma: no cover
+logger = logging.getLogger("uvicorn")
+logger.setLevel(logging.DEBUG)
 
 
 def env(key) -> str:
+    logger.debug("Getting environment variable %s", key)
     val = os.getenv(key)
     if val is None:
         raise ValueError(f"g2w-003: Environment variable '{key}' not found")
@@ -26,7 +29,7 @@ def post(req) -> dict:
     """
     resp = requests.post(req).json()
     # @todo #58/DEV Ensure that logging is enabled for this method as well.
-    logging.debug("WS req: '%s', resp: '%s'", req, resp)
+    logger.debug("WS req: '%s', resp: '%s'", req, resp)
     if resp["status"] == "ok":
         return resp["data"]
     else:
@@ -45,10 +48,13 @@ class Ws:
         Find user details in Worksection by email.
         Return user or system account (if not found).
         """
+        logger.debug("Got e-mail %s", email)
         user = next((u for u in self.all_users() if u["email"] == email), None)
         if user is not None:
+            logger.debug("Returning user details")
             return user
         else:
+            logger.debug("Returning admin details")
             return next(
                 (u for u in self.all_users() if u["id"] == ws_admin_userid())
             )
@@ -57,6 +63,7 @@ class Ws:
         """
         Fetch all users from worksection space.
         """
+        logger.debug("Fetching all users from worksection space.")
         if not self.users:
             # @todo #/DEV use memorize feature/approach instead of own caching.
             self.users.extend(
@@ -68,12 +75,14 @@ class Ws:
         """
         Add a comment to a particular worksection task id.
         """
+        logger.debug("Adding a comment: %s", body)
         return post(self.post_comment_url(prj, task, body))
 
     def post_comment_url(self, prj, task, body) -> str:
         """
         Construct URL for posting comments.
         """
+        logger.debug("Constructing post url")
         return env("WS_URL_POST_COMMENT").format(
             prj,
             task,
@@ -86,9 +95,11 @@ class Ws:
         """
         Add a ticket to a particular worksection project.
         """
+        logger.debug("Adding a ticket to a particular worksection project.")
         return post(self.post_task_url(prj, subj, body))
 
     def post_task_url(self, prj, subj, body) -> str:
+        logger.debug("Constructing task url")
         return env("WS_URL_POST_TASK").format(
             prj,
             subj,
