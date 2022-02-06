@@ -3,15 +3,14 @@ import os  # pragma: no cover
 from typing import List
 
 import requests  # pragma: no cover
-logger = logging.getLogger("uvicorn")
-logger.setLevel(logging.DEBUG)
+log = logging.getLogger("uvicorn")
 
 
 def env(key) -> str:
-    logger.debug("Getting environment variable %s", key)
     val = os.getenv(key)
     if val is None:
         raise ValueError(f"g2w-003: Environment variable '{key}' not found")
+    log.debug("Env variable '%s'='%s'", key, val)
     return val
 
 
@@ -29,7 +28,7 @@ def post(req) -> dict:
     """
     resp = requests.post(req).json()
     # @todo #58/DEV Ensure that logging is enabled for this method as well.
-    logger.debug("WS req: '%s', resp: '%s'", req, resp)
+    log.debug("WS req: '%s', resp: '%s'", req, resp)
     if resp["status"] == "ok":
         return resp["data"]
     else:
@@ -48,62 +47,62 @@ class Ws:
         Find user details in Worksection by email.
         Return user or system account (if not found).
         """
-        logger.debug("Got e-mail %s", email)
+        log.debug("Got e-mail %s", email)
         user = next((u for u in self.all_users() if u["email"] == email), None)
-        if user is not None:
-            logger.debug("Returning user details")
-            return user
-        else:
-            logger.debug("Returning admin details")
-            return next(
-                (u for u in self.all_users() if u["id"] == ws_admin_userid())
-            )
+        if user is None:
+            user = next((u for u in self.all_users() if u["id"] == ws_admin_userid()))
+        log.debug("Found user %s", user)
+        return user
 
     def all_users(self) -> List[dict]:
         """
         Fetch all users from worksection space.
         """
-        logger.debug("Fetching all users from worksection space.")
         if not self.users:
             # @todo #/DEV use memorize feature/approach instead of own caching.
             self.users.extend(
                 requests.get(env("WS_URL_ALL_USERS")).json()["data"]
             )
+        log.debug("Found %d worksection users", len(self.users))
         return self.users
 
     def add_comment(self, prj: int, task: int, body: str) -> dict:
         """
         Add a comment to a particular worksection task id.
         """
-        logger.debug("Adding a comment: %s", body)
-        return post(self.post_comment_url(prj, task, body))
+        url = self.post_comment_url(prj, task, body)
+        log.debug("Add new comment by '%s' url based on text '%s'", url, body)
+        return post(url)
 
     def post_comment_url(self, prj, task, body) -> str:
         """
         Construct URL for posting comments.
         """
-        logger.debug("Constructing post url")
-        return env("WS_URL_POST_COMMENT").format(
+        url = env("WS_URL_POST_COMMENT").format(
             prj,
             task,
             ws_admin_email(),
             body,
             env(f"WS_PRJ_{prj}_POST_COMMENT_HASH"),
         )
+        log.debug("Constructing post url '%s'", url)
+        return url
 
     def add_task(self, prj, subj, body) -> dict:
         """
         Add a ticket to a particular worksection project.
         """
-        logger.debug("Adding a ticket to a particular worksection project.")
-        return post(self.post_task_url(prj, subj, body))
+        url = self.post_task_url(prj, subj, body)
+        log.debug("Adding a ticket with url '%s' to a particular worksection project.", url)
+        return post(url)
 
     def post_task_url(self, prj, subj, body) -> str:
-        logger.debug("Constructing task url")
-        return env("WS_URL_POST_TASK").format(
+        url = env("WS_URL_POST_TASK").format(
             prj,
             subj,
             ws_admin_email(),
             body,
             env(f"WS_PRJ_{prj}_POST_TASK_HASH"),
         )
+        log.debug("Constructing task url '%s'", url)
+        return url

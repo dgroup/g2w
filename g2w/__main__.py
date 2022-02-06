@@ -14,7 +14,7 @@ from g2w import Push, Ws, LoggableRoute, Alert, __version__
 ws = Ws()
 app = FastAPI(version=__version__, title="g2w")
 router = APIRouter(route_class=LoggableRoute)
-logger = logging.getLogger("uvicorn")
+log = logging.getLogger("uvicorn")
 
 
 @router.post(
@@ -22,14 +22,14 @@ logger = logging.getLogger("uvicorn")
     summary="Create a comment in worksection task from Gitlab push event",
 )
 def push(event: Push, project_id: int) -> dict:
-    logger.debug("Got push event '%s' for project '%d'", event, project_id)
+    log.debug("Got push event '%s' for project '%d'", event, project_id)
     author = ws.find_user(event.user_email)
     msg = event.comment(author)
     comments = []
     # @todo #/DEV Return 400 if no WS tasks found within commit messages
     for task_id in event.tasks():
         comments.append(ws.add_comment(project_id, task_id, msg))
-    logger.debug("Added comments %s", comments)
+    log.debug("Added comments %s", comments)
     return {"comments": comments}
 
 
@@ -40,10 +40,10 @@ def push(event: Push, project_id: int) -> dict:
 async def alert(event: Request, project_id: int) -> dict:
     # @todo #/DEV Replace plain json in ticket summary by more sophisticated
     #  object with proper formatting
-    logger.debug("Got project id %d", project_id)
+    log.debug("Got project id %d", project_id)
     alert = Alert()
     # @todo #/DEV Return the direct answer from Worksection instead of wrapping
-    logger.debug("Adding task to project %d", project_id)
+    log.debug("Adding task to project %d", project_id)
     return {
         "created": ws.add_task(
             project_id, alert.subject(), alert.desc(await event.json())
@@ -71,13 +71,16 @@ def main() -> None:  # pragma: no cover
         default="WARNING",
         required=False
     )
+    cmd.add_argument(
+        "--host",
+        type=str,
+        help="The default host value",
+        default="0.0.0.0",
+        required=False
+    )
     args = cmd.parse_args()
-    logger.setLevel(args.log.upper())
-    logger.debug('This message should go to the log file')
-    logger.info('So should this')
-    logger.warning('And this, too')
-    logger.error('And non-ASCII stuff, too, like Øresund and Malmö')
-    uvicorn.run(app, host="0.0.0.0", port=args.port)
+    log.setLevel(args.log.upper())
+    uvicorn.run(app, host=args.host, port=args.port)
     # @todo #/DEV Add prometheus client library for app monitoring
     #  https://github.com/prometheus/client_python
 
