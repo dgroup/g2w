@@ -75,7 +75,7 @@ def main() -> None:  # pragma: no cover
         "--host",
         type=str,
         help="The default host value",
-        default="0.0.0.0",
+        default="localhost",
         required=False,
     )
     args = cmd.parse_args()
