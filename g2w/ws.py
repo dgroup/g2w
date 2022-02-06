@@ -4,7 +4,7 @@ from typing import List
 
 import requests  # pragma: no cover
 
-log = logging.getLogger("uvicorn")
+log = logging.getLogger(__name__)
 
 
 def env(key) -> str:

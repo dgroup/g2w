@@ -3,18 +3,18 @@
 #  Their benchmarks shows that's faster, however own micro-benchmarks are
 #  required.
 import argparse  # pragma: no cover
+import logging
 
 import uvicorn  # pragma: no cover
 from fastapi import Request, FastAPI
 from fastapi.routing import APIRouter
-import logging
 
-from g2w import Push, Ws, LoggableRoute, Alert, __version__
+from g2w import Push, Ws, LoggableRoute, Alert, Log, __version__
 
 ws = Ws()
 app = FastAPI(version=__version__, title="g2w")
 router = APIRouter(route_class=LoggableRoute)
-log = logging.getLogger("uvicorn")
+log = logging.getLogger(f"g2w.{__name__}")
 
 
 @router.post(
@@ -65,10 +65,25 @@ def main() -> None:  # pragma: no cover
         required=False,
     )
     cmd.add_argument(
+        "-log",
         "--log",
         type=str,
-        help="The default log level for apllication logs",
+        help="The default log level for application logs",
         default="WARNING",
+        required=False,
+    )
+    cmd.add_argument(
+        "--log-file",
+        type=str,
+        help="The default log format application logs",
+        default="logconfig.yaml",
+        required=False,
+    )
+    cmd.add_argument(
+        "--log-format",
+        type=str,
+        help="The default formatter for primary(default) logger",
+        default="[%(asctime)s] %(levelname)s tid=%(thread)d - %(message)s",
         required=False,
     )
     cmd.add_argument(
@@ -79,8 +94,14 @@ def main() -> None:  # pragma: no cover
         required=False,
     )
     args = cmd.parse_args()
-    log.setLevel(args.log.upper())
-    uvicorn.run(app, host=args.host, port=args.port)
+    uvicorn.run(
+        app,
+        host=args.host,
+        port=args.port,
+        log_config=Log(
+            args.log_file, args.log.upper(), args.log_format
+        ).read(),
+    )
     # @todo #/DEV Add prometheus client library for app monitoring
     #  https://github.com/prometheus/client_python
 

@@ -11,3 +11,4 @@ fastapi
 uvicorn[standard]
 pydantic
 Airspeed
+types-PyYAML

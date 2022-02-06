@@ -5,7 +5,7 @@ from typing import Callable
 from fastapi import Request, Response
 from fastapi.routing import APIRoute
 
-log = logging.getLogger("uvicorn")
+log = logging.getLogger(__name__)
 
 # @todo #/DEV Extract timings to a separate route.
 """
@@ -22,15 +22,13 @@ class LoggableRoute(APIRoute):
             resp: Response = await original_route_handler(req)
             duration = time.time() - before
             resp.headers["X-Response-Time"] = str(duration)
-            # @todo #58/DEV Ensure that logging is enabled for HTTP traffic and
-            #  could be used.
-            log.debug("req duration: %s", duration)
             log.debug(
-                "req: %s, duration: %s, resp: %s, resp. headers: %s",
-                req,
+                "%s %s req='%s', duration='%.2fs', resp='%s'",
+                req.method,
+                req.url,
+                req.__dict__,
                 duration,
-                resp,
-                resp.headers,
+                resp.__dict__,
             )
             return resp
 
