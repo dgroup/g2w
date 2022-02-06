@@ -1,9 +1,12 @@
 import re
 import urllib.parse
+import logging
 from typing import List
 
 import airspeed
 from pydantic import BaseModel
+
+log = logging.getLogger("uvicorn")
 
 # @todo #/DEV Worksection task id in the middle (or end) might be in message
 #  not only at the begining. It could be in the middle or end. It would be good
@@ -34,10 +37,16 @@ class Push(BaseModel):
         """
         Gitlab push commit SHA url
         """
-        return self.project["homepage"] + "/-/commit/" + self.checkout_sha
+        commit_url = (
+            self.project["homepage"] + "/-/commit/" + self.checkout_sha
+        )
+        log.debug("Got commit url '%s'", commit_url)
+        return commit_url
 
     def quantity(self) -> str:
-        return "commits" if self.total_commits_count > 1 else "commit"
+        total = "commits" if self.total_commits_count > 1 else "commit"
+        log.debug("Found %d %s", self.total_commits_count, total)
+        return total
 
     def branch_url(self) -> str:
         prefix = "refs/heads/"
@@ -45,7 +54,9 @@ class Push(BaseModel):
             branch = self.ref[len(prefix) :]
         else:
             branch = self.ref
-        return self.project["homepage"] + "/tree/" + branch
+        url = self.project["homepage"] + "/tree/" + branch
+        log.debug("Returning branch url '%s'", url)
+        return url
 
     """
     Allows to transform Gitlab push event about multiple commits into HTML
@@ -61,7 +72,7 @@ class Push(BaseModel):
                     #end
                 </ul>
             """  # noqa: E501
-        return urllib.parse.quote_plus(
+        body = urllib.parse.quote_plus(
             airspeed.Template(t).merge(
                 {
                     "push_url": self.push_sha(),
@@ -77,13 +88,15 @@ class Push(BaseModel):
                 }
             )
         )
+        log.debug("Leaving a comment '%s'", body)
+        return body
 
     """
     Extract worksection task id from Gitlab commit message
     """
 
     def tasks(self) -> List[int]:
-        return list(
+        ids = list(
             filter(
                 lambda ticket_id: ticket_id > 0,
                 map(
@@ -98,3 +111,7 @@ class Push(BaseModel):
                 ),
             )
         )
+        log.debug(
+            "Extract worksection task ids '%s' from Gitlab commit message", ids
+        )
+        return ids
