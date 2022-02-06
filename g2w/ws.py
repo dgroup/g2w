@@ -100,6 +100,15 @@ class Ws:
         return post(url)
 
     def post_task_url(self, prj, subj, body) -> str:
+        """
+        Construct Worksection API url for new tickets creation
+          https://worksection.com/faq/api-task.html#q1577
+        where
+         - 'WS_URL_POST_TASK' env variable with Worksection endpoint URL
+         - 'WS_PRJ_{YOUR_PROJECT_ID}_POST_TASK_HASH' env variable with
+            Worksection md5 hash for this action:
+             /project/{YOUR_PROJECT_ID}/post_task{YOUR_API_KEY}
+        """
         url = env("WS_URL_POST_TASK").format(
             prj,
             subj,
