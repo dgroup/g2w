@@ -3,6 +3,7 @@ import os  # pragma: no cover
 from typing import List
 
 import requests  # pragma: no cover
+
 log = logging.getLogger("uvicorn")
 
 
@@ -50,7 +51,9 @@ class Ws:
         log.debug("Got e-mail %s", email)
         user = next((u for u in self.all_users() if u["email"] == email), None)
         if user is None:
-            user = next((u for u in self.all_users() if u["id"] == ws_admin_userid()))
+            user = next(
+                (u for u in self.all_users() if u["id"] == ws_admin_userid())
+            )
         log.debug("Found user %s", user)
         return user
 
@@ -93,7 +96,10 @@ class Ws:
         Add a ticket to a particular worksection project.
         """
         url = self.post_task_url(prj, subj, body)
-        log.debug("Adding a ticket with url '%s' to a particular worksection project.", url)
+        log.debug(
+            "Adding a ticket with url '%s' to a particular worksection project.",
+            url,
+        )
         return post(url)
 
     def post_task_url(self, prj, subj, body) -> str:

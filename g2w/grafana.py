@@ -3,6 +3,7 @@ import logging
 
 import airspeed
 from pydantic import BaseModel
+
 log = logging.getLogger("uvicorn")
 
 
@@ -22,7 +23,9 @@ class Alert(BaseModel):
                                  </code></pre>"""
             ).merge(locals())
         )
-        log.debug("Transforming Gitlab push event into HTML comment '%s'.", body)
+        log.debug(
+            "Transforming Gitlab push event into HTML comment '%s'.", body
+        )
         return body
 
     def subject(self):

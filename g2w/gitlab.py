@@ -5,6 +5,7 @@ from typing import List
 
 import airspeed
 from pydantic import BaseModel
+
 log = logging.getLogger("uvicorn")
 
 # @todo #/DEV Worksection task id in the middle (or end) might be in message
@@ -36,7 +37,9 @@ class Push(BaseModel):
         """
         Gitlab push commit SHA url
         """
-        commit_url = self.project["homepage"] + "/-/commit/" + self.checkout_sha
+        commit_url = (
+            self.project["homepage"] + "/-/commit/" + self.checkout_sha
+        )
         log.debug("Got commit url '%s'", commit_url)
         return commit_url
 
@@ -108,5 +111,7 @@ class Push(BaseModel):
                 ),
             )
         )
-        log.debug("Extract worksection task ids '%s' from Gitlab commit message", ids)
+        log.debug(
+            "Extract worksection task ids '%s' from Gitlab commit message", ids
+        )
         return ids

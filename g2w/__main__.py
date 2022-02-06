@@ -62,21 +62,21 @@ def main() -> None:  # pragma: no cover
         type=int,
         help="The port to listen REST API endpoints",
         default=8080,
-        required=False
+        required=False,
     )
     cmd.add_argument(
         "--log",
         type=str,
         help="The default log level for apllication logs",
         default="WARNING",
-        required=False
+        required=False,
     )
     cmd.add_argument(
         "--host",
         type=str,
         help="The default host value",
         default="0.0.0.0",
-        required=False
+        required=False,
     )
     args = cmd.parse_args()
     log.setLevel(args.log.upper())
