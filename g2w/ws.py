@@ -28,7 +28,6 @@ def post(req) -> dict:
     Send POST request to Worksection API.
     """
     resp = requests.post(req).json()
-    # @todo #58/DEV Ensure that logging is enabled for this method as well.
     log.debug("WS req: '%s', resp: '%s'", req, resp)
     if resp["status"] == "ok":
         return resp["data"]
