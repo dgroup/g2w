@@ -4,7 +4,7 @@ import logging
 import airspeed
 from pydantic import BaseModel
 
-log = logging.getLogger("uvicorn")
+log = logging.getLogger(__name__)
 
 
 class Alert(BaseModel):

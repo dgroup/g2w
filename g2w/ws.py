@@ -4,7 +4,7 @@ from typing import List
 
 import requests  # pragma: no cover
 
-log = logging.getLogger("uvicorn")
+log = logging.getLogger(__name__)
 
 
 def env(key) -> str:
@@ -28,7 +28,6 @@ def post(req) -> dict:
     Send POST request to Worksection API.
     """
     resp = requests.post(req).json()
-    # @todo #58/DEV Ensure that logging is enabled for this method as well.
     log.debug("WS req: '%s', resp: '%s'", req, resp)
     if resp["status"] == "ok":
         return resp["data"]

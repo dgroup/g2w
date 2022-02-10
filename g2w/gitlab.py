@@ -6,7 +6,7 @@ from typing import List
 import airspeed
 from pydantic import BaseModel
 
-log = logging.getLogger("uvicorn")
+log = logging.getLogger(__name__)
 
 # @todo #/DEV Worksection task id in the middle (or end) might be in message
 #  not only at the begining. It could be in the middle or end. It would be good
