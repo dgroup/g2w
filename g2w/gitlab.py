@@ -8,11 +8,7 @@ from pydantic import BaseModel
 
 log = logging.getLogger(__name__)
 
-# @todo #/DEV Worksection task id in the middle (or end) might be in message
-#  not only at the begining. It could be in the middle or end. It would be good
-#  to support such cases as from app perspective we need Worksection task id
-#  only and doesn't matter where it in message exactly...
-commit_msg_pattern = re.compile(r"^#WS-(\d+):.+$")
+commit_msg_pattern = re.compile(r"#WS-(\d+)")
 
 """
 Push event details from Gitlab.
