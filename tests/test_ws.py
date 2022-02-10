@@ -3,7 +3,7 @@ import os
 import pytest
 
 from g2w import Ws
-from .test_push import fake_push_event
+from .test_gitlab import fake_push_event
 
 # @todo #/DEV Think about more elegant test ignorance procedure.
 #  Right now this @pytest.mark.skipif looks too verbose.

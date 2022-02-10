@@ -1,6 +1,7 @@
 import pytest
 
 from g2w import Push
+from g2w import commit_msg_pattern
 
 given = pytest.mark.parametrize
 
@@ -61,6 +62,22 @@ fake_push_event = Push(
 
 def test_ctor():
     assert fake_push_event.ref == "refs/heads/master"
+
+
+def test_commit_regexp_matched():
+    assert fake_push_event.tasks() == [6231285]
+
+
+def test_commit_regexp_matched_at_beginning():
+    assert commit_msg_pattern.search("#WS-100500: The message").group(1) == "100500"
+
+
+def test_commit_regexp_matched_at_end():
+    assert commit_msg_pattern.search("The message regarding #WS-100500").group(1) == "100500"
+
+
+def test_commit_regexp_matched_at_middle():
+    assert commit_msg_pattern.search("It fix for #WS-100500 that we are waiting").group(1) == "100500"
 
 
 def test_multiple_commits_message():
