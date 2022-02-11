@@ -21,7 +21,7 @@ from g2w.__main__ import app
 #  - https://setuptools.pypa.io/en/latest/pkg_resources.html
 
 
-class SimpleTest(unittest.TestCase):
+class ClientTest(unittest.TestCase):
 
     @pytest.mark.skipif(os.getenv("WS_ADMIN_EMAIL") is None, reason="Environment variable 'WS_ADMIN_EMAIL' is absent")
     @pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
