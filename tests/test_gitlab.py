@@ -108,7 +108,7 @@ def test_commit_regexp_matched_at_middle():
 #  https://understandingdata.com/list-of-python-assert-statements-for-unit-tests # noqa: E501
 
 
-class SimpleTest(unittest.TestCase):
+class PushTest(unittest.TestCase):
 
     def test_ctor(self):
         self.assertEqual(fake_push_event.ref, "refs/heads/master")
