@@ -86,30 +86,7 @@ fake_push_event = Push(
 )
 
 
-# @todo #/DEV Inspect more sophisticated ways how to use asserts during unit
-#  testing like assertj/Hamcrest matchers for Java. So far the simple dict
-#  approach is used https://stackoverflow.com/a/46809074/6916890
-
-
-def test_commit_regexp_matched_at_beginning():
-    assert 6231285 in fake_push_event.tasks()
-
-
-def test_commit_regexp_matched_at_end():
-    assert 100510 in fake_push_event.tasks()
-
-
-def test_commit_regexp_matched_at_middle():
-    assert 1234567 in fake_push_event.tasks()
-
-
-# @todo #17/DEV Replace assert below by well-known standard statement:
-#  https://docs.pytest.org/en/6.2.x/assert.html
-#  https://understandingdata.com/list-of-python-assert-statements-for-unit-tests # noqa: E501
-
-
 class PushTest(unittest.TestCase):
-
     def test_ctor(self):
         self.assertEqual(fake_push_event.ref, "refs/heads/master")
 

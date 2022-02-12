@@ -22,7 +22,6 @@ from g2w.__main__ import app
 
 
 class ClientTest(unittest.TestCase):
-
     @pytest.mark.skipif(os.getenv("WS_ADMIN_EMAIL") is None, reason="Environment variable 'WS_ADMIN_EMAIL' is absent")
     @pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
     @pytest.mark.skipif(os.getenv("WS_URL_POST_COMMENT") is None, reason="Environment variable 'WS_URL_POST_COMMENT' is absent")
