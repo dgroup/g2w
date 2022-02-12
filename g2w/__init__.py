@@ -6,4 +6,12 @@ from .version import __version__
 from .ws import Ws
 from .log import Log
 
-__all__ = ["Push", "Ws", "LoggableRoute", "Alert", "commit_msg_pattern", "Log", __version__]
+__all__ = [
+    "Push",
+    "Ws",
+    "LoggableRoute",
+    "Alert",
+    "commit_msg_pattern",
+    "Log",
+    __version__,
+]
