@@ -26,7 +26,6 @@ def push(event: Push, project_id: int, response: Response) -> dict:
     author = ws.find_user(event.user_email)
     msg = event.comment(author)
     comments = []
-    # @todo #/DEV Return 400 if no WS tasks found within commit messages
     if not event.tasks():
         response.status_code = status.HTTP_400_BAD_REQUEST
     for task_id in event.tasks():
