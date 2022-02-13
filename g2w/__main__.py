@@ -6,7 +6,7 @@ import argparse  # pragma: no cover
 import logging
 
 import uvicorn  # pragma: no cover
-from fastapi import Request, FastAPI
+from fastapi import Request, FastAPI, Response, status
 from fastapi.routing import APIRouter
 
 from g2w import Push, Ws, LoggableRoute, Alert, Log, __version__
@@ -21,12 +21,14 @@ log = logging.getLogger(f"g2w.{__name__}")
     path="/gitlab/push/{project_id}",
     summary="Create a comment in worksection task from Gitlab push event",
 )
-def push(event: Push, project_id: int) -> dict:
+def push(event: Push, project_id: int, response: Response) -> dict:
     log.debug("Got push event '%s' for project '%d'", event, project_id)
     author = ws.find_user(event.user_email)
     msg = event.comment(author)
     comments = []
     # @todo #/DEV Return 400 if no WS tasks found within commit messages
+    if not event.tasks():
+        response.status_code = status.HTTP_400_BAD_REQUEST
     for task_id in event.tasks():
         comments.append(ws.add_comment(project_id, task_id, msg))
     log.debug("Added comments %s", comments)
