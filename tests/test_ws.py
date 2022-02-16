@@ -1,7 +1,7 @@
 import os
 
 import pytest
-import unittest
+from .conftest import AbstractTest
 
 from g2w import Ws
 from .test_gitlab import fake_push_event
@@ -10,7 +10,7 @@ from .test_gitlab import fake_push_event
 #  Right now this @pytest.mark.skipif looks too verbose.
 
 
-class UsersAndCommentTest(unittest.TestCase):
+class UsersAndCommentTest(AbstractTest):
     @pytest.mark.skipif(os.getenv("WS_INT_TESTS_DISABLED") is not None, reason="Integration tests are disabled")
     @pytest.mark.skipif(os.getenv("WS_URL_ALL_USERS") is None, reason="Environment variable 'WS_URL_ALL_USERS' is absent")
     def test_users(self):

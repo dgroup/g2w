@@ -2,7 +2,7 @@ import pytest
 import unittest
 
 from g2w import Push
-from g2w import commit_msg_pattern
+from .conftest import AbstractTest
 
 given = pytest.mark.parametrize
 
@@ -86,7 +86,7 @@ fake_push_event = Push(
 )
 
 
-class PushTest(unittest.TestCase):
+class PushTest(AbstractTest):
     def test_ctor(self):
         self.assertEqual(fake_push_event.ref, "refs/heads/master")
 
