@@ -10,11 +10,13 @@ from fastapi import Request, FastAPI, Response, status
 from fastapi.routing import APIRouter
 
 from g2w import Push, Ws, LoggableRoute, Alert, Log, __version__
+from prometheus_fastapi_instrumentator import Instrumentator
 
 ws = Ws()
 app = FastAPI(version=__version__, title="g2w")
 router = APIRouter(route_class=LoggableRoute)
 log = logging.getLogger(f"g2w.{__name__}")
+Instrumentator().instrument(app).expose(app)
 
 
 @router.post(

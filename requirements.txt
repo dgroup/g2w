@@ -12,3 +12,4 @@ uvicorn[standard]
 pydantic
 Airspeed
 types-PyYAML
+prometheus_fastapi_instrumentator
