@@ -19,7 +19,6 @@ def go_to_tmpdir(request):
 
 
 class AbstractTest(unittest.TestCase):
-
     def body(self, json_file: str, folder="tests/resources") -> dict:
         filename = os.path.join(os.path.realpath(folder), json_file)
         with open(filename, "r") as read_file:
