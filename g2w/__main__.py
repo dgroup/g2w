@@ -105,8 +105,6 @@ def main() -> None:  # pragma: no cover
             args.log_file, args.log.upper(), args.log_format
         ).read(),
     )
-    # @todo #/DEV Add prometheus client library for app monitoring
-    #  https://github.com/prometheus/client_python
 
 
 if __name__ == "__main__":  # pragma: no cover
