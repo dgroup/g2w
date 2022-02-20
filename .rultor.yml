@@ -16,7 +16,7 @@ release:
     sed -i "s/0\.0\.0/${tag}/g" g2w/version.py
     sed -i "s/0\.0\.0/${tag}/g" .github/workflows/master.yml
     make virtualenv install test
-    git add g2w/VERSION setup.py .github/workflows/master.yml
+    git add g2w/version.py setup.py .github/workflows/master.yml
     git commit -m "version set to ${tag}"
     python -m pip install --upgrade pip
     pip install setuptools wheel twine
