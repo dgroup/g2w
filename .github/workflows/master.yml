@@ -64,7 +64,7 @@ jobs:
           WS_PRJ_223728_POST_TASK_HASH: ${{ secrets.WS_PRJ_223728_POST_TASK_HASH }}
           WS_PRJ_223728_POST_COMMENT_HASH: ${{ secrets.WS_PRJ_223728_POST_COMMENT_HASH }}
       - name: "Upload coverage to Codecov"
-        uses: codecov/codecov-action@v3.0.0
+        uses: codecov/codecov-action@v3.1.0
         # with:
         #   fail_ci_if_error: true
 
